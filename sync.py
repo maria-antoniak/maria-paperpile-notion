@@ -226,8 +226,6 @@ def main():
         # Create new page
         if ref_id not in archive_ids:
             pprint.pprint('Adding entry: ' + str(current_entry['ref_id']))
-#             pprint.pprint(ref_id)
-#             pprint.pprint(archive_ids)
             notion_add_entry(title=title,
                              authors=authors,
                              year=year,
@@ -237,12 +235,11 @@ def main():
                              keywords=keywords)
             update_archive = True
 
-         # Update existing page
+        # Update existing page
         elif current_entry not in archive:
             pprint.pprint('Updating entry: ' + str(current_entry['ref_id']))
             page_id = notion_fetch_page(ref_id)
             if page_id != -1:
-                # pprint.pprint('page_id != -1')
                 notion_update_page(page_id=page_id,
                                    title=title,
                                    authors=authors,
@@ -251,6 +248,16 @@ def main():
                                    link=link,
                                    abstract=abstract,
                                    keywords=keywords)
+                update_archive = True
+            else:
+                pprint.pprint('Error: page_id == -1; Trying to add entry: ' + str(current_entry['ref_id']))
+                notion_add_entry(title=title,
+                                 authors=authors,
+                                 year=year,
+                                 ref_id=ref_id,
+                                 link=link,
+                                 abstract=abstract,
+                                 keywords=keywords)
                 update_archive = True
 
     # Only update the archive if necessary
