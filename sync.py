@@ -225,7 +225,7 @@ def main():
 
         # Create new page
         if ref_id not in archive_ids:
-#             pprint.pprint('ref_id not in archive_ids')
+            pprint.pprint('Adding entry: ' + str(current_entry['ref_id']))
 #             pprint.pprint(ref_id)
 #             pprint.pprint(archive_ids)
             notion_add_entry(title=title,
@@ -239,7 +239,7 @@ def main():
 
          # Update existing page
         elif current_entry not in archive:
-            pprint.pprint('Entry not in archive: ' + str(current_entry['ref_id']))
+            pprint.pprint('Updating entry: ' + str(current_entry['ref_id']))
             page_id = notion_fetch_page(ref_id)
             if page_id != -1:
                 # pprint.pprint('page_id != -1')
