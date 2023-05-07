@@ -11,7 +11,7 @@ TODO:
 - Default icon for papers.
 """
 
-ARCHIVE_PATH = 'archive.pk'
+ARCHIVE_PATH = 'archive.json'
 BIB_PATH = 'references.bib'
 NOTION_TOKEN = os.environ['NOTION_TOKEN']
 DATABASE_IDENTIFIER = os.environ['DATABASE_IDENTIFIER']
@@ -186,7 +186,7 @@ def main():
 
     if os.path.exists(ARCHIVE_PATH):
         with open(ARCHIVE_PATH, 'rb') as archive_file:
-            archive = pickle.load(archive_file)
+            archive = json.load(archive_file)
     else:
         archive = []
     archive_ids = [e['ID'] for e in archive]
@@ -246,8 +246,8 @@ def main():
     # Only update the archive if necessary
     if update_archive:
         pprint.pprint('update_archive')
-        with open(ARCHIVE_PATH, 'wb') as archive_file:
-            archive = pickle.dump(bibliography.entries, archive_file)
+        with open(ARCHIVE_PATH, 'w') as archive_file:
+            archive = json.dump(bibliography.entries, archive_file)
 
 
 if __name__ == "__main__":
