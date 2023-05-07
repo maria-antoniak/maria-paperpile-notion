@@ -27,8 +27,8 @@ jobs:
 
       - name: Update archive
         run: |
-            git config --global user.email "seba-1511@hotmail.com"
-            git config --global user.name "Paperpile to Notion"
+            git config --global user.email "antoniakmaria@gmail.com"
+            git config --global user.name "maria-antoniak"
             git add .
             git commit -am 'Update archive.'
         shell: bash
