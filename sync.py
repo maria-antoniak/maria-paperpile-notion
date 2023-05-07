@@ -256,7 +256,7 @@ def main():
     if update_archive and entries_to_archive:
         pprint.pprint('Updating archive with ' + str(len(entries_to_archive)) + ' bibliography entries')
         with open(ARCHIVE_PATH, 'w') as archive_file:
-            archive = json.dump(entries_to_archive)
+            archive = json.dump(entries_to_archive, archive_file)
 
 
 if __name__ == "__main__":
