@@ -217,7 +217,7 @@ def main():
         entries_to_archive.append({'title': title,
                                    'authors': authors,
                                    'year': year,
-                                   'ref_id': ref_id',
+                                   'ref_id': ref_id,
                                    'link': link,
                                    'abstract': abstract,
                                    'keywords': keywords})
