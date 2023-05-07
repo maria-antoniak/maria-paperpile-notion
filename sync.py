@@ -11,7 +11,7 @@ TODO:
 - Default icon for papers.
 """
 
-ARCHIVE_PATH = 'archive.json'
+ARCHIVE_PATH = 'archive.bib'
 BIB_PATH = 'references.bib'
 NOTION_TOKEN = os.environ['NOTION_TOKEN']
 DATABASE_IDENTIFIER = os.environ['DATABASE_IDENTIFIER']
@@ -186,7 +186,7 @@ def main():
 
     if os.path.exists(ARCHIVE_PATH):
         with open(ARCHIVE_PATH, 'rb') as archive_file:
-            archive = json.load(archive_file)
+            archive = bibtexparser.load(archive_file, parser=parser)
     else:
         archive = []
     archive_ids = [e['ID'] for e in archive]
@@ -247,7 +247,7 @@ def main():
     if update_archive:
         pprint.pprint('update_archive')
         with open(ARCHIVE_PATH, 'w') as archive_file:
-            archive = json.dump(bibliography.entries, archive_file)
+            archive = bibtexparser.dump(bibliography.entries, archive_file)
 
 
 if __name__ == "__main__":
