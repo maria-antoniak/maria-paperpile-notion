@@ -189,7 +189,7 @@ def main():
             archive = json.load(archive_file)
     else:
         archive = []
-    archive_ids = [e['ID'] for e in archive]
+    archive_ids = [e['ref_id'] for e in archive]
 
     # Add each entry to notion database
     update_archive = False
@@ -214,13 +214,14 @@ def main():
         
         keywords = entry.get('keywords', '')
 
-        entries_to_archive.append({'title': title,
-                                   'authors': authors,
-                                   'year': year,
-                                   'ref_id': ref_id,
-                                   'link': link,
-                                   'abstract': abstract,
-                                   'keywords': keywords})
+        current_entry = {'title': title,
+                         'authors': authors,
+                         'year': year,
+                         'ref_id': ref_id,
+                         'link': link,
+                         'abstract': abstract,
+                         'keywords': keywords}
+        entries_to_archive.append(current_entry)
 
         # Create new page
         if ref_id not in archive_ids:
@@ -237,8 +238,8 @@ def main():
             update_archive = True
 
          # Update existing page
-        elif entry not in archive:
-            # pprint.pprint('entry not in archive')
+        elif current_entry not in archive:
+            pprint.pprint('Entry not in archive: ' + str(current_entry['ref_id']))
             page_id = notion_fetch_page(ref_id)
             if page_id != -1:
                 # pprint.pprint('page_id != -1')
