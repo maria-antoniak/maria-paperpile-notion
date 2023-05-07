@@ -11,7 +11,7 @@ TODO:
 - Default icon for papers.
 """
 
-ARCHIVE_PATH = 'archive.bib'
+ARCHIVE_PATH = 'archive.json'
 BIB_PATH = 'references.bib'
 NOTION_TOKEN = os.environ['NOTION_TOKEN']
 DATABASE_IDENTIFIER = os.environ['DATABASE_IDENTIFIER']
@@ -186,13 +186,14 @@ def main():
 
     if os.path.exists(ARCHIVE_PATH):
         with open(ARCHIVE_PATH, 'rb') as archive_file:
-            archive = bibtexparser.load(archive_file, parser=parser)
+            archive = json.load(archive_file)
     else:
         archive = []
     archive_ids = [e['ID'] for e in archive]
 
     # Add each entry to notion database
     update_archive = False
+    entries_to_archive = []
     for entry in reversed(bibliography.entries):
 
         title = entry.get('title', '')
@@ -212,6 +213,14 @@ def main():
         abstract = entry.get('abstract', '')
         
         keywords = entry.get('keywords', '')
+
+        entries_to_archive.append({'title': title,
+                                   'authors': authors,
+                                   'year': year,
+                                   'ref_id': ref_id',
+                                   'link': link,
+                                   'abstract': abstract,
+                                   'keywords': keywords})
 
         # Create new page
         if ref_id not in archive_ids:
@@ -244,10 +253,10 @@ def main():
                 update_archive = True
 
     # Only update the archive if necessary
-    if update_archive:
-        pprint.pprint('update_archive')
+    if update_archive and entries_to_archive:
+        pprint.pprint('Updating archive with ' + str(len(entries_to_archive)) + ' bibliography entries')
         with open(ARCHIVE_PATH, 'w') as archive_file:
-            archive = bibtexparser.dump(bibliography.entries, archive_file)
+            archive = json.dump(entries_to_archive)
 
 
 if __name__ == "__main__":
