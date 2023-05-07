@@ -84,14 +84,17 @@ def notion_add_entry(title='',
                      link='',
                      abstract='',
                      keywords=''):
-    
+           
+    pprint.pprint('inside notion_add_entry')
+
     url = "https://api.notion.com/v1/pages"
     payload = get_payload(title, authors, year, ref_id, link, abstract, keywords)
-    # pprint.pprint(payload)
+    
+    pprint.pprint(payload)
 
     response = requests.post(url, json=payload, headers=HEADERS)
-    # pprint.pprint('inside notion_add_entry')
-    # pprint.pprint(json.loads(response.text))
+    
+    pprint.pprint(json.loads(response.text))
 
 
 def notion_update_page(page_id,
