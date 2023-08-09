@@ -8,7 +8,7 @@ Sync changes in Paperpile to a Notion database.
 
 1. Create a new database (e.g. "Papers") with the columns named exactly:
 
-    1. `Title` of type title.
+    1. `Title` of type text.
     2. `Authors` of type text.
     3. `Year` of type text.
     4. `Link` of type url.
