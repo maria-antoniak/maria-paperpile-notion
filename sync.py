@@ -134,32 +134,6 @@ def notion_fetch_page(ref_id):
     return -1
 
 
-# def get_notion_ref_ids(ref_ids_in_bib):
-#     url = f"https://api.notion.com/v1/databases/{DATABASE_IDENTIFIER}/query"
-           
-#     ref_ids_in_notion = []
-#     ref_ids_NOT_in_notion = []
-
-#     for ref_id in ref_ids_in_bib:
-
-#         # List database pages
-#         payload = { "page_size": 1,
-#                     "filter": {'property': 'Reference ID',
-#                                'rich_text': {"equals": ref_id}}}
-    
-#         response = requests.post(url, json=payload, headers=HEADERS)
-    
-#         response = json.loads(response.text)
-#         #  pprint.pprint(response)
-#         try:
-#             if len(response['results']) > 0:
-#                 ref_ids_in_notion.append(ref_id)
-#         except:
-#             ref_ids_NOT_in_notion.append(ref_id)
-                   
-#     return ref_ids_in_notion
-
-
 def get_notion_ref_ids(ref_ids_in_bib):
     url = f"https://api.notion.com/v1/databases/{DATABASE_IDENTIFIER}/query"
 
