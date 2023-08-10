@@ -201,9 +201,9 @@ def get_notion_ref_ids(ref_ids_in_bib):
             year = _result['properties']['Year']['rich_text'][0]['plain_text']
         if _result['properties']['Abstract']['rich_text']:
             abstract = _result['properties']['Abstract']['rich_text'][0]['plain_text']
-        if _result['properties']['Tags']['multiselect']:
-            for _keyword in _result['properties']['Tags']['multiselect']:
-                keywords.append(_result['properties']['Tags']['multiselect']['name'])
+        if _result['properties']['Tags']['multi_select']:
+            for _keyword in _result['properties']['Tags']['multi_select']:
+                keywords.append(_result['properties']['Tags']['multi_select']['name'])
                    
         archive.append({'title': title,
                         'authors': authors,
