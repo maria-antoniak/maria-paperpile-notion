@@ -311,6 +311,7 @@ def main():
 
         # Update existing page
         elif current_entry not in archive:
+            # TODO need to pull full archive from Notion, not just Ref IDs!!!!!!!!!!!!!!!
             page_id = notion_fetch_page(ref_id)
             if page_id != -1:
                 pprint.pprint('--> Updating entry: ' + ref_id)
