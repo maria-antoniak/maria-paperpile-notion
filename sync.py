@@ -77,41 +77,30 @@ def get_payload(title='',
 
 
 
-def notion_add_entry(title='',
-                     authors='',
-                     year='0',
-                     ref_id='',
-                     link='',
-                     abstract='',
-                     keywords=''):
-           
-    # pprint.pprint('inside notion_add_entry')
-
+def notion_add_entry(formatted_entry):
     url = "https://api.notion.com/v1/pages"
-    payload = get_payload(title, authors, year, ref_id, link, abstract, keywords)
+    payload = get_payload(formatted_entry['title'], 
+                          formatted_entry['authors'],  
+                          formatted_entry['year'], 
+                          formatted_entry['ref_id'],  
+                          formatted_entry['link'],  
+                          formatted_entry['abstract'],  
+                          formatted_entry['keywords'])
     
-    # pprint.pprint(payload)
-
     response = requests.post(url, json=payload, headers=HEADERS)
     
-    # pprint.pprint(json.loads(response.text))
-
 
 def notion_update_page(page_id,
-                       title='',
-                       authors='',
-                       year='0',
-                       ref_id='',
-                       link='',
-                       abstract='',
-                       keywords=''):
-    
+                       formatted_entry):
     url = f"https://api.notion.com/v1/pages/{page_id}"
-    payload = get_payload(title, authors, year, ref_id, link, abstract, keywords)
-    # pprint.pprint(payload)
+    payload = get_payload(formatted_entry['title'], 
+                          formatted_entry['authors'],  
+                          formatted_entry['year'], 
+                          formatted_entry['ref_id'],  
+                          formatted_entry['link'],  
+                          formatted_entry['abstract'],  
+                          formatted_entry['keywords'])
     response = requests.patch(url, json=payload, headers=HEADERS)
-    # pprint.pprint('inside notion_update_page')
-    # pprint.pprint(json.loads(response.text))
 
 
 def notion_fetch_page(ref_id):
@@ -321,20 +310,14 @@ def main():
         # Create new page if it doesn't already exist in NOtion
         if ref_id not in archive_ids:
             pprint.pprint('--> Adding entry: ' + ref_id)
-            notion_add_entry(title=title,
-                             authors=authors,
-                             year=year,
-                             ref_id=ref_id,
-                             link=link,
-                             abstract=abstract,
-                             keywords=keywords)
+            notion_add_entry(formatted_entry)
 
         # Update existing page
         elif formatted_entry not in archive:
             pprint.pprint('===========================================')
-            pprint.pprint('FORMATTED ENTRY')
+            pprint.pprint('FORMATTED ENTRY FROM BIB')
             pprint.pprint(formatted_entry)
-            pprint.pprint('CLOSEST ENTRY')
+            pprint.pprint('CLOSEST ENTRY IN NOTION')
             if ref_id in id_archive_dict:
                 pprint.pprint(id_archive_dict[ref_id])
             else:
@@ -343,23 +326,11 @@ def main():
             page_id = notion_fetch_page(ref_id)
             if page_id != -1:
                 pprint.pprint('--> Updating entry: ' + ref_id)
-                notion_update_page(page_id=page_id,
-                                   title=title,
-                                   authors=authors,
-                                   year=year,
-                                   ref_id=ref_id,
-                                   link=link,
-                                   abstract=abstract,
-                                   keywords=keywords)
+                notion_update_page(page_id,
+                                   formatted_entry)
             else:
                 pprint.pprint('--> Error: page_id == -1; Trying to add entry: ' + ref_id)
-                notion_add_entry(title=title,
-                                 authors=authors,
-                                 year=year,
-                                 ref_id=ref_id,
-                                 link=link,
-                                 abstract=abstract,
-                                 keywords=keywords)
+                notion_add_entry(formatted_entry)
 
 
 if __name__ == "__main__":
