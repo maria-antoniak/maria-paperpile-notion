@@ -228,6 +228,7 @@ def main():
 
         # Create new page
         if ref_id not in archive_ids:
+            pprint.pprint(archive_ids)
             pprint.pprint('Adding entry: ' + str(current_entry['ref_id']))
             notion_add_entry(title=title,
                              authors=authors,
