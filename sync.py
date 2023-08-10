@@ -295,9 +295,8 @@ def main():
         pprint.pprint('PROCESSING NEW PAPER: ' + ref_id)
         pprint.pprint('===========================================================')
 
-        # Create new page
+        # Create new page if it doesn't already exist in NOtion
         if ref_id not in archive_ids:
-            # BUT IT IS IN THE LIST! WHAT IS HAPPENING??????????????????????????????????
             pprint.pprint('--> Adding entry: ' + ref_id)
             notion_add_entry(title=title,
                              authors=authors,
@@ -311,13 +310,14 @@ def main():
         elif current_entry not in archive:
             pprint.pprint('===========================================')
             pprint.pprint('CURRENT_ENTRY')
-            page_id = notion_fetch_page(ref_id)
+            pprint.pprint(current_entry)
             pprint.pprint('CLOSEST ENTRY')
             if ref_id in id_archive_dict:
                 pprint.pprint(id_archive_dict[ref_id])
             else:
                 pprint.pprint('ref_ID not found in archive')
             pprint.pprint('===========================================')
+            page_id = notion_fetch_page(ref_id)
             if page_id != -1:
                 pprint.pprint('--> Updating entry: ' + ref_id)
                 notion_update_page(page_id=page_id,
