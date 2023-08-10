@@ -154,7 +154,6 @@ def get_notion_ref_ids(ref_ids_in_bib):
         try:
             if len(response['results']) > 0:
                 ref_ids_in_notion.append(ref_id)
-                return response['results'][0]['id']
         except:
             ref_ids_NOT_in_notion.append(ref_id)
                    
