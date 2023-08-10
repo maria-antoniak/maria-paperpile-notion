@@ -101,6 +101,7 @@ def notion_update_page(page_id,
                           formatted_entry['abstract'],  
                           formatted_entry['keywords'])
     response = requests.patch(url, json=payload, headers=HEADERS)
+    pprint.pprint(response)
 
 
 def notion_fetch_page(ref_id):
@@ -301,8 +302,6 @@ def main():
 
         ref_id, formatted_entry = get_bib_entry(entry)
 
-
-
         # Create new page if it doesn't already exist in NOtion
         if ref_id not in archive_ids:
             pprint.pprint('--> Adding entry: ' + ref_id)
@@ -320,7 +319,6 @@ def main():
                 pprint.pprint('ref_ID not found in archive')
             page_id = notion_fetch_page(ref_id)
             if page_id != -1:
-                pprint.pprint('--> Updating entry: ' + ref_id)
                 notion_update_page(page_id,
                                    formatted_entry)
             else:
