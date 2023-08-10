@@ -203,7 +203,7 @@ def get_notion_ref_ids(ref_ids_in_bib):
             abstract = _result['properties']['Abstract']['rich_text'][0]['plain_text']
         if _result['properties']['Tags']['multi_select']:
             for _keyword in _result['properties']['Tags']['multi_select']:
-                keywords.append(_result['properties']['Tags']['multi_select']['name'])
+                keywords.append(_keyword['name'])
                    
         archive.append({'title': title,
                         'authors': authors,
