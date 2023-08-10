@@ -283,7 +283,7 @@ def get_bib_entry(entry):
                        'abstract': abstract,
                        'keywords': keywords}
            
-    return formatted_entry
+    return ref_id, formatted_entry
 
 
 def main():
@@ -312,7 +312,7 @@ def main():
     # Iterate over the bib entries and 
     for entry in reversed(bibliography.entries):
 
-        formatted_entry = get_bib_entry(entry)
+        ref_id, formatted_entry = get_bib_entry(entry)
 
         pprint.pprint('===========================================================')
         pprint.pprint('PROCESSING NEW PAPER: ' + ref_id)
