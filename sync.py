@@ -180,7 +180,7 @@ def get_notion_ref_ids2(ref_ids_in_bib):
 
     ref_ids_in_notion = []
     for _result in results:
-        ref_ids_in_notion.append(_result['properties']['Reference ID']['rich_text']['plain_text'])
+        ref_ids_in_notion.append(_result['properties']['Reference ID']['rich_text'][0]['plain_text'])
 
     return ref_ids_in_notion
            
