@@ -287,7 +287,7 @@ def main():
     pprint.pprint(len(ref_ids_in_bib))
     archive_ids, archive = get_notion_ref_ids(ref_ids_in_bib)
     pprint.pprint(len(archive_ids))
-    pprint.pprint(archive_ids)
+    # pprint.pprint(archive_ids)
     pprint.pprint('NUMBER OF PAPERS TO ADD:' + str(len(ref_ids_in_bib) - len(archive_ids)))
     pprint.pprint(archive)
 
