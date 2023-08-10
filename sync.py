@@ -158,6 +158,31 @@ def get_notion_ref_ids(ref_ids_in_bib):
             ref_ids_NOT_in_notion.append(ref_id)
                    
     return ref_ids_in_notion
+
+
+def get_notion_ref_ids2(ref_ids_in_bib):
+    url = f"https://api.notion.com/v1/databases/{DATABASE_IDENTIFIER}/query"
+
+    page_size = 100
+
+    payload = {"page_size": page_size}
+    response = requests.post(url, json=payload, headers=headers)
+
+    data = response.json()
+
+    results = data["results"]
+    while data["has_more"] and get_all:
+        payload = {"page_size": page_size, "start_cursor": data["next_cursor"]}
+        response = requests.post(url, json=payload, headers=headers)
+        data = response.json()
+        results.extend(data["results"])
+        pprint.pprint(results)
+
+    ref_ids_in_notion = []
+    for _result in results:
+        ref_ids_in_notion.append(_result['Reference ID'])
+
+    return results
            
 
 def clean_str(string):
