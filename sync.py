@@ -288,25 +288,20 @@ def main():
     with open(BIB_PATH) as bib_file:
         bibliography = bibtexparser.load(bib_file, parser=parser)
 
-    pprint.pprint('!!!!!!!!!!!!!!!!!!! GETTING REF IDS ALREADY IN NOTION !!!!!!!!!!!!!!!!!!!!!!!')
     ref_ids_in_bib = []
     for entry in reversed(bibliography.entries):
         ref_ids_in_bib.append(entry.get('ID'))
     pprint.pprint(len(ref_ids_in_bib))
     archive_ids, archive, id_archive_dict = get_notion_ref_ids(ref_ids_in_bib)
     pprint.pprint(len(archive_ids))
-    # pprint.pprint(archive_ids)
     pprint.pprint('NUMBER OF PAPERS TO ADD:' + str(len(ref_ids_in_bib) - len(archive_ids)))
-    # pprint.pprint(archive)
 
     # Iterate over the bib entries and 
     for entry in reversed(bibliography.entries):
 
         ref_id, formatted_entry = get_bib_entry(entry)
 
-        pprint.pprint('===========================================================')
-        pprint.pprint('PROCESSING NEW PAPER: ' + ref_id)
-        pprint.pprint('===========================================================')
+
 
         # Create new page if it doesn't already exist in NOtion
         if ref_id not in archive_ids:
@@ -315,7 +310,7 @@ def main():
 
         # Update existing page
         elif formatted_entry not in archive:
-            pprint.pprint('===========================================')
+            pprint.pprint('--> Updating entry:' + ref_id)
             pprint.pprint('FORMATTED ENTRY FROM BIB')
             pprint.pprint(formatted_entry)
             pprint.pprint('CLOSEST ENTRY IN NOTION')
@@ -323,7 +318,6 @@ def main():
                 pprint.pprint(id_archive_dict[ref_id])
             else:
                 pprint.pprint('ref_ID not found in archive')
-            pprint.pprint('===========================================')
             page_id = notion_fetch_page(ref_id)
             if page_id != -1:
                 pprint.pprint('--> Updating entry: ' + ref_id)
