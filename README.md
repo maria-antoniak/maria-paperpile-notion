@@ -13,6 +13,7 @@ Sync changes in Paperpile to a Notion database.
     3. `Year` of type text.
     4. `Link` of type url.
     5. `Reference ID` of type text.
+    6. `Tags` of type multiselect.
 
 2. Get the **database identifier** from the database page. If your database url is:
 
@@ -36,6 +37,7 @@ Sync changes in Paperpile to a Notion database.
     
     1. `NOTION_TOKEN`: Your integration's internal integration token, from step 3.5 above.
     2. `DATABASE_IDENTIFIER`: Your database identifier, from step 2 above.
+4. Settings > Actions > General > Workflow Permissions > then check “Read and Write Permissions”
 
 
 ### On Paperpile
