@@ -262,7 +262,7 @@ def get_bib_entry(entry):
         abstract = entry.get('abstract', '')
 
     if entry.get('keywords', ''):
-        keywords = [k.strip() for k in entry.get('keywords', '').lower().split(';')]
+        keywords = list(set([k.strip() for k in entry.get('keywords', '').lower().split(';')]))
 
     formatted_entry = {'title': title,
                        'authors': authors,
