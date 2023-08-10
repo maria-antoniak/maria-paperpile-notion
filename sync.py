@@ -233,7 +233,7 @@ def get_bib_entry(entry):
     title = ''
     authors = ''
     year = ''
-    link = ''
+    link = None
     abstract = ''
     keywords = []
 
