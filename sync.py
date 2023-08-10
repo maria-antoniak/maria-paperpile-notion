@@ -239,6 +239,53 @@ def format_authors(test_string):
     return ', '.join(formatted_authors)
 
 
+def get_bib_entry(entry):
+    ref_id = ''
+    title = ''
+    authors = ''
+    year = ''
+    link = ''
+    abstract = ''
+    keywords = []
+
+    if entry.get('title', ''):
+               title = entry.get('title', '')
+               title = clean_str(title)
+               title = title
+
+    if entry.get('author', ''):
+        authors = entry.get('author', '')
+        authors = authors.replace(' and ', '; ')
+        authors = authors.replace(' And ', '; ')
+        authors = clean_str(authors)
+        authors = format_authors(authors)
+
+    if entry.get('year', ''):
+        year = entry.get('year', '')
+
+    if entry.get('url', ''):
+        link = entry.get('url', '')
+
+    if entry.get('ID'):
+        ref_id = entry.get('ID')
+
+    if entry.get('abstract', ''):
+        abstract = entry.get('abstract', '')
+
+    if entry.get('keywords', ''):
+        keywords = entry.get('keywords', '').split(';')
+
+    formatted_entry = {'title': title,
+                       'authors': authors,
+                       'year': year,
+                       'ref_id': ref_id,
+                       'link': link,
+                       'abstract': abstract,
+                       'keywords': keywords}
+           
+    return formatted_entry
+
+
 def main():
 
     # Instantiate the parser
@@ -265,31 +312,7 @@ def main():
     # Iterate over the bib entries and 
     for entry in reversed(bibliography.entries):
 
-        title = entry.get('title', '')
-        title = clean_str(title)
-        title = title
-
-        authors = entry.get('author', '')
-        authors = authors.replace(' and ', '; ')
-        authors = authors.replace(' And ', '; ')
-        authors = clean_str(authors)
-        authors = format_authors(authors)
-
-        year = entry.get('year', '')
-        link = entry.get('url', '')
-        ref_id = entry.get('ID')
-        
-        abstract = entry.get('abstract', '')
-        
-        keywords = entry.get('keywords', '').split(';')
-
-        current_entry = {'title': title,
-                         'authors': authors,
-                         'year': year,
-                         'ref_id': ref_id,
-                         'link': link,
-                         'abstract': abstract,
-                         'keywords': keywords}
+        formatted_entry = get_bib_entry(entry)
 
         pprint.pprint('===========================================================')
         pprint.pprint('PROCESSING NEW PAPER: ' + ref_id)
@@ -307,10 +330,10 @@ def main():
                              keywords=keywords)
 
         # Update existing page
-        elif current_entry not in archive:
+        elif formatted_entry not in archive:
             pprint.pprint('===========================================')
-            pprint.pprint('CURRENT_ENTRY')
-            pprint.pprint(current_entry)
+            pprint.pprint('FORMATTED ENTRY')
+            pprint.pprint(formatted_entry)
             pprint.pprint('CLOSEST ENTRY')
             if ref_id in id_archive_dict:
                 pprint.pprint(id_archive_dict[ref_id])
