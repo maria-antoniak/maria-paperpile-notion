@@ -168,6 +168,7 @@ def get_notion_ref_ids(ref_ids_in_bib):
         if _result['properties']['Tags']['multi_select']:
             for _keyword in _result['properties']['Tags']['multi_select']:
                 keywords.append(_keyword['name'].lower().strip())
+            keywords = sorted(keywords)
 
         new_entry = {'title': title,
                      'authors': authors,
@@ -262,7 +263,7 @@ def get_bib_entry(entry):
         abstract = entry.get('abstract', '')
 
     if entry.get('keywords', ''):
-        keywords = list(set([k.strip() for k in entry.get('keywords', '').lower().split(';')]))
+        keywords = sorted(list(set([k.strip() for k in entry.get('keywords', '').lower().split(';')])))
 
     formatted_entry = {'title': title,
                        'authors': authors,
