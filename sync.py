@@ -134,6 +134,33 @@ def notion_fetch_page(ref_id):
     return -1
 
 
+def get_notion_ref_ids(ref_ids_in_bib):
+    url = f"https://api.notion.com/v1/databases/{DATABASE_IDENTIFIER}/query"
+           
+    ref_ids_in_notion = []
+    ref_ids_NOT_in_notion = []
+
+    for ref_id in ref_ids_in_bib:
+
+        # List database pages
+        payload = { "page_size": 1,
+                    "filter": {'property': 'Reference ID',
+                               'rich_text': {"equals": ref_id}}}
+    
+        response = requests.post(url, json=payload, headers=HEADERS)
+    
+        response = json.loads(response.text)
+        #  pprint.pprint(response)
+        try:
+            if len(response['results']) > 0:
+                ref_ids_in_notion.append(ref_id)
+                return response['results'][0]['id']
+        except:
+            ref_ids_NOT_in_notion.append(ref_id)
+                   
+    return ref_ids_in_notion
+           
+
 def clean_str(string):
     string = string.strip()
     string = string.replace('\n', ' ')
@@ -189,12 +216,19 @@ def main():
         bibliography = bibtexparser.load(bib_file, parser=parser)
 
     # Open up the archive JSON file and get a list of all the papers already processed
-    if os.path.exists(ARCHIVE_PATH):
-        with open(ARCHIVE_PATH, 'rb') as archive_file:
-            archive = json.load(archive_file)
-    else:
-        archive = []
-    archive_ids = [e['ref_id'] for e in archive]
+    # if os.path.exists(ARCHIVE_PATH):
+    #     with open(ARCHIVE_PATH, 'rb') as archive_file:
+    #         archive = json.load(archive_file)
+    # else:
+    #     archive = []
+    # archive_ids = [e['ref_id'] for e in archive]
+
+    pprint.pprint('!!!!!!!!!!!!!!!!!!! GETTING REF IDS ALREADY IN NOTION !!!!!!!!!!!!!!!!!!!!!!!')
+    ref_ids_in_bib = []
+    for entry in reversed(bibliography.entries):
+        ref_ids_in_bib.append(entry.get('ID'))
+    archive_ids = get_notion_ref_ids(ref_ids_in_bib)
+    pprint.pprint(archive_ids)
 
     # Iterate over the bib entries and 
     update_archive = False
@@ -247,9 +281,9 @@ def main():
 
         # Update existing page
         elif current_entry not in archive:
-            pprint.pprint('--> Updating entry: ' + ref_id)
             page_id = notion_fetch_page(ref_id)
             if page_id != -1:
+                pprint.pprint('--> Updating entry: ' + ref_id)
                 notion_update_page(page_id=page_id,
                                    title=title,
                                    authors=authors,
@@ -271,10 +305,10 @@ def main():
                 update_archive = True
 
     # Only update the archive if necessary
-    if update_archive and entries_to_archive:
-        pprint.pprint('Updating archive with ' + str(len(entries_to_archive)) + ' bibliography entries')
-        with open(ARCHIVE_PATH, 'w') as archive_file:
-            archive = json.dump(entries_to_archive, archive_file)
+    # if update_archive and entries_to_archive:
+    #     pprint.pprint('Updating archive with ' + str(len(entries_to_archive)) + ' bibliography entries')
+    #     with open(ARCHIVE_PATH, 'w') as archive_file:
+    #         archive = json.dump(entries_to_archive, archive_file)
 
 
 if __name__ == "__main__":
