@@ -250,6 +250,7 @@ def main():
     ref_ids_in_bib = []
     for entry in reversed(bibliography.entries):
         ref_ids_in_bib.append(entry.get('ID'))
+    pprint.pprint(len(ref_ids_in_bib))
     archive_ids = get_notion_ref_ids2(ref_ids_in_bib)
     pprint.pprint(archive_ids)
 
