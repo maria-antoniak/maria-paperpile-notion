@@ -258,6 +258,7 @@ def main():
     archive_ids = get_notion_ref_ids2(ref_ids_in_bib)
     pprint.pprint(len(archive_ids))
     pprint.pprint(archive_ids)
+    pprint.pprint('NUMBER OF PAPERS TO ADD:' + str(len(ref_ids_in_bib) - len(archive_ids)))
 
     # Iterate over the bib entries and 
     # update_archive = False
