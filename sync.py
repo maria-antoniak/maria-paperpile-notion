@@ -306,6 +306,7 @@ def main():
         # Create new page if it doesn't already exist in NOtion
         if ref_id not in archive_ids:
             pprint.pprint('--> Adding entry: ' + ref_id)
+            pprint.pprint(formatted_entry)
             notion_add_entry(formatted_entry)
 
         # Update existing page
