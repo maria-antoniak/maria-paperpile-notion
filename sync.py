@@ -90,11 +90,11 @@ def notion_add_entry(title='',
     url = "https://api.notion.com/v1/pages"
     payload = get_payload(title, authors, year, ref_id, link, abstract, keywords)
     
-    pprint.pprint(payload)
+    # pprint.pprint(payload)
 
     response = requests.post(url, json=payload, headers=HEADERS)
     
-    pprint.pprint(json.loads(response.text))
+    # pprint.pprint(json.loads(response.text))
 
 
 def notion_update_page(page_id,
@@ -184,9 +184,11 @@ def main():
     parser.homogenize_fields = False
     parser.interpolate_strings = False
 
+    # Load the bib file from Paperpile
     with open(BIB_PATH) as bib_file:
         bibliography = bibtexparser.load(bib_file, parser=parser)
 
+    # Open up the archive JSON file and get a list of all the papers already processed
     if os.path.exists(ARCHIVE_PATH):
         with open(ARCHIVE_PATH, 'rb') as archive_file:
             archive = json.load(archive_file)
@@ -194,7 +196,7 @@ def main():
         archive = []
     archive_ids = [e['ref_id'] for e in archive]
 
-    # Add each entry to notion database
+    # Iterate over the bib entries and 
     update_archive = False
     entries_to_archive = []
     for entry in reversed(bibliography.entries):
@@ -226,11 +228,14 @@ def main():
                          'keywords': keywords}
         entries_to_archive.append(current_entry)
 
-        ref_id = str(current_entry['ref_id']) # I'm not sure why the other way was wrong, but I think this fixes my duplicate bug
+        pprint.pprint('===========================================================')
+        pprint.pprint('PROCESSING NEW PAPER: ' + ref_id)
+        pprint.pprint('===========================================================')
 
         # Create new page
         if ref_id not in archive_ids:
-            pprint.pprint('Adding entry: ' + str(current_entry['ref_id']))
+            # BUT IT IS IN THE LIST! WHAT IS HAPPENING??????????????????????????????????
+            pprint.pprint('Adding entry: ' + ref_id)
             notion_add_entry(title=title,
                              authors=authors,
                              year=year,
@@ -242,7 +247,7 @@ def main():
 
         # Update existing page
         elif current_entry not in archive:
-            pprint.pprint('Updating entry: ' + str(current_entry['ref_id']))
+            pprint.pprint('Updating entry: ' + ref_id)
             page_id = notion_fetch_page(ref_id)
             if page_id != -1:
                 notion_update_page(page_id=page_id,
@@ -255,7 +260,7 @@ def main():
                                    keywords=keywords)
                 update_archive = True
             else:
-                pprint.pprint('Error: page_id == -1; Trying to add entry: ' + str(current_entry['ref_id']))
+                pprint.pprint('Error: page_id == -1; Trying to add entry: ' + ref_id)
                 notion_add_entry(title=title,
                                  authors=authors,
                                  year=year,
