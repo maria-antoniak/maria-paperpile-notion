@@ -163,7 +163,7 @@ def get_notion_ref_ids(ref_ids_in_bib):
 def get_notion_ref_ids2(ref_ids_in_bib):
     url = f"https://api.notion.com/v1/databases/{DATABASE_IDENTIFIER}/query"
 
-    page_size = 100
+    page_size = len(ref_ids_in_bib)
 
     payload = {"page_size": page_size}
     response = requests.post(url, json=payload, headers=HEADERS)
