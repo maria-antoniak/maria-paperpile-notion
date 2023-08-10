@@ -61,7 +61,7 @@ def get_payload(title='',
                                                             "text": {"content": abstract}}]}
 
     if keywords:
-        formatted_tags = [{"name": _tag} for _tag in keywords.split(';')]
+        formatted_tags = [{"name": _tag} for _tag in keywords]
         payload["properties"]["Tags"] = {"multi_select": formatted_tags}
     else:
         payload["properties"]["Tags"] = {"multi_select": []}
@@ -281,7 +281,7 @@ def main():
         
         abstract = entry.get('abstract', '')
         
-        keywords = entry.get('keywords', '')
+        keywords = entry.get('keywords', '').split(';')
 
         current_entry = {'title': title,
                          'authors': authors,
