@@ -226,9 +226,10 @@ def main():
                          'keywords': keywords}
         entries_to_archive.append(current_entry)
 
+        ref_id = str(current_entry['ref_id']) # I'm not sure why the other way was wrong, but I think this fixes my duplicate bug
+
         # Create new page
         if ref_id not in archive_ids:
-            pprint.pprint(archive_ids)
             pprint.pprint('Adding entry: ' + str(current_entry['ref_id']))
             notion_add_entry(title=title,
                              authors=authors,
