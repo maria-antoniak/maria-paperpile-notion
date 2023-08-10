@@ -166,12 +166,12 @@ def get_notion_ref_ids2(ref_ids_in_bib):
     page_size = 100
 
     payload = {"page_size": page_size}
-    response = requests.post(url, json=payload, headers=headers)
+    response = requests.post(url, json=payload, headers=HEADERS)
 
     data = response.json()
 
     results = data["results"]
-    while data["has_more"] and get_all:
+    while data["has_more"]:
         payload = {"page_size": page_size, "start_cursor": data["next_cursor"]}
         response = requests.post(url, json=payload, headers=headers)
         data = response.json()
