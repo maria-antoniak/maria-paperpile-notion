@@ -176,13 +176,12 @@ def get_notion_ref_ids2(ref_ids_in_bib):
         response = requests.post(url, json=payload, headers=HEADERS)
         data = response.json()
         results.extend(data["results"])
-        pprint.pprint(results)
 
     ref_ids_in_notion = []
     for _result in results:
-        ref_ids_in_notion.append(_result['Reference ID'])
+        ref_ids_in_notion.append(_result['properties']['Reference ID']['rich_text']['plain_text'])
 
-    return results
+    return ref_ids_in_notion
            
 
 def clean_str(string):
