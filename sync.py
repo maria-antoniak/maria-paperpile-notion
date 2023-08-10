@@ -191,7 +191,7 @@ def get_notion_ref_ids(ref_ids_in_bib):
         year = ''
         link = _result['properties']['Link']['url']
         abstract = ''
-        keywords = ''
+        keywords = []
 
         if _result['properties']['Title']['title']:
             title = _result['properties']['Title']['title'][0]['plain_text']
