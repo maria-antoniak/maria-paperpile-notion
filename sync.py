@@ -134,33 +134,33 @@ def notion_fetch_page(ref_id):
     return -1
 
 
-def get_notion_ref_ids(ref_ids_in_bib):
-    url = f"https://api.notion.com/v1/databases/{DATABASE_IDENTIFIER}/query"
+# def get_notion_ref_ids(ref_ids_in_bib):
+#     url = f"https://api.notion.com/v1/databases/{DATABASE_IDENTIFIER}/query"
            
-    ref_ids_in_notion = []
-    ref_ids_NOT_in_notion = []
+#     ref_ids_in_notion = []
+#     ref_ids_NOT_in_notion = []
 
-    for ref_id in ref_ids_in_bib:
+#     for ref_id in ref_ids_in_bib:
 
-        # List database pages
-        payload = { "page_size": 1,
-                    "filter": {'property': 'Reference ID',
-                               'rich_text': {"equals": ref_id}}}
+#         # List database pages
+#         payload = { "page_size": 1,
+#                     "filter": {'property': 'Reference ID',
+#                                'rich_text': {"equals": ref_id}}}
     
-        response = requests.post(url, json=payload, headers=HEADERS)
+#         response = requests.post(url, json=payload, headers=HEADERS)
     
-        response = json.loads(response.text)
-        #  pprint.pprint(response)
-        try:
-            if len(response['results']) > 0:
-                ref_ids_in_notion.append(ref_id)
-        except:
-            ref_ids_NOT_in_notion.append(ref_id)
+#         response = json.loads(response.text)
+#         #  pprint.pprint(response)
+#         try:
+#             if len(response['results']) > 0:
+#                 ref_ids_in_notion.append(ref_id)
+#         except:
+#             ref_ids_NOT_in_notion.append(ref_id)
                    
-    return ref_ids_in_notion
+#     return ref_ids_in_notion
 
 
-def get_notion_ref_ids2(ref_ids_in_bib):
+def get_notion_ref_ids(ref_ids_in_bib):
     url = f"https://api.notion.com/v1/databases/{DATABASE_IDENTIFIER}/query"
 
     page_size = len(ref_ids_in_bib)
@@ -255,7 +255,7 @@ def main():
     for entry in reversed(bibliography.entries):
         ref_ids_in_bib.append(entry.get('ID'))
     pprint.pprint(len(ref_ids_in_bib))
-    archive_ids = get_notion_ref_ids2(ref_ids_in_bib)
+    archive_ids = get_notion_ref_ids(ref_ids_in_bib)
     pprint.pprint(len(archive_ids))
     pprint.pprint(archive_ids)
     pprint.pprint('NUMBER OF PAPERS TO ADD:' + str(len(ref_ids_in_bib) - len(archive_ids)))
@@ -263,76 +263,76 @@ def main():
     # Iterate over the bib entries and 
     # update_archive = False
     # entries_to_archive = []
-    # for entry in reversed(bibliography.entries):
+    for entry in reversed(bibliography.entries):
 
-    #     title = entry.get('title', '')
-    #     title = clean_str(title)
-    #     title = title
+        title = entry.get('title', '')
+        title = clean_str(title)
+        title = title
 
-    #     authors = entry.get('author', '')
-    #     authors = authors.replace(' and ', '; ')
-    #     authors = authors.replace(' And ', '; ')
-    #     authors = clean_str(authors)
-    #     authors = format_authors(authors)
+        authors = entry.get('author', '')
+        authors = authors.replace(' and ', '; ')
+        authors = authors.replace(' And ', '; ')
+        authors = clean_str(authors)
+        authors = format_authors(authors)
 
-    #     year = entry.get('year', '')
-    #     link = entry.get('url', '')
-    #     ref_id = entry.get('ID')
+        year = entry.get('year', '')
+        link = entry.get('url', '')
+        ref_id = entry.get('ID')
         
-    #     abstract = entry.get('abstract', '')
+        abstract = entry.get('abstract', '')
         
-    #     keywords = entry.get('keywords', '')
+        keywords = entry.get('keywords', '')
 
-    #     current_entry = {'title': title,
-    #                      'authors': authors,
-    #                      'year': year,
-    #                      'ref_id': ref_id,
-    #                      'link': link,
-    #                      'abstract': abstract,
-    #                      'keywords': keywords}
-    #     entries_to_archive.append(current_entry)
+        current_entry = {'title': title,
+                         'authors': authors,
+                         'year': year,
+                         'ref_id': ref_id,
+                         'link': link,
+                         'abstract': abstract,
+                         'keywords': keywords}
+        # entries_to_archive.append(current_entry)
 
-    #     pprint.pprint('===========================================================')
-    #     pprint.pprint('PROCESSING NEW PAPER: ' + ref_id)
-    #     pprint.pprint('===========================================================')
+        pprint.pprint('===========================================================')
+        pprint.pprint('PROCESSING NEW PAPER: ' + ref_id)
+        pprint.pprint('===========================================================')
 
-    #     # Create new page
-    #     if ref_id not in archive_ids:
-    #         # BUT IT IS IN THE LIST! WHAT IS HAPPENING??????????????????????????????????
-    #         pprint.pprint('--> Adding entry: ' + ref_id)
-    #         notion_add_entry(title=title,
-    #                          authors=authors,
-    #                          year=year,
-    #                          ref_id=ref_id,
-    #                          link=link,
-    #                          abstract=abstract,
-    #                          keywords=keywords)
-    #         update_archive = True
+        # Create new page
+        if ref_id not in archive_ids:
+            # BUT IT IS IN THE LIST! WHAT IS HAPPENING??????????????????????????????????
+            pprint.pprint('--> Adding entry: ' + ref_id)
+            notion_add_entry(title=title,
+                             authors=authors,
+                             year=year,
+                             ref_id=ref_id,
+                             link=link,
+                             abstract=abstract,
+                             keywords=keywords)
+            # update_archive = True
 
-    #     # Update existing page
-    #     elif current_entry not in archive:
-    #         page_id = notion_fetch_page(ref_id)
-    #         if page_id != -1:
-    #             pprint.pprint('--> Updating entry: ' + ref_id)
-    #             notion_update_page(page_id=page_id,
-    #                                title=title,
-    #                                authors=authors,
-    #                                year=year,
-    #                                ref_id=ref_id,
-    #                                link=link,
-    #                                abstract=abstract,
-    #                                keywords=keywords)
-    #             update_archive = True
-    #         else:
-    #             pprint.pprint('--> Error: page_id == -1; Trying to add entry: ' + ref_id)
-    #             notion_add_entry(title=title,
-    #                              authors=authors,
-    #                              year=year,
-    #                              ref_id=ref_id,
-    #                              link=link,
-    #                              abstract=abstract,
-    #                              keywords=keywords)
-    #             update_archive = True
+        # Update existing page
+        elif current_entry not in archive:
+            page_id = notion_fetch_page(ref_id)
+            if page_id != -1:
+                pprint.pprint('--> Updating entry: ' + ref_id)
+                notion_update_page(page_id=page_id,
+                                   title=title,
+                                   authors=authors,
+                                   year=year,
+                                   ref_id=ref_id,
+                                   link=link,
+                                   abstract=abstract,
+                                   keywords=keywords)
+                # update_archive = True
+            else:
+                pprint.pprint('--> Error: page_id == -1; Trying to add entry: ' + ref_id)
+                notion_add_entry(title=title,
+                                 authors=authors,
+                                 year=year,
+                                 ref_id=ref_id,
+                                 link=link,
+                                 abstract=abstract,
+                                 keywords=keywords)
+                # update_archive = True
 
     # Only update the archive if necessary
     # if update_archive and entries_to_archive:
