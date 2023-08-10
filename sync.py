@@ -305,13 +305,17 @@ def main():
 
         # Create new page if it doesn't already exist in NOtion
         if ref_id not in archive_ids:
-            pprint.pprint('--> Adding entry: ' + ref_id)
+            pprint.pprint('==================================================')
+            pprint.pprint('Adding entry: ' + ref_id)
+            pprint.pprint('==================================================')
             pprint.pprint(formatted_entry)
             notion_add_entry(formatted_entry)
 
         # Update existing page
         elif formatted_entry not in archive:
-            pprint.pprint('--> Updating entry:' + ref_id)
+            pprint.pprint('==================================================')
+            pprint.pprint('Updating entry:' + ref_id)
+            pprint.pprint('==================================================')
             pprint.pprint('FORMATTED ENTRY FROM BIB')
             pprint.pprint(formatted_entry)
             pprint.pprint('CLOSEST ENTRY IN NOTION')
