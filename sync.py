@@ -272,7 +272,7 @@ def main():
 
     # Only update the archive if necessary
     if update_archive and entries_to_archive:
-        pprint.pprint('--> Updating archive with ' + str(len(entries_to_archive)) + ' bibliography entries')
+        pprint.pprint('Updating archive with ' + str(len(entries_to_archive)) + ' bibliography entries')
         with open(ARCHIVE_PATH, 'w') as archive_file:
             archive = json.dump(entries_to_archive, archive_file)
 
