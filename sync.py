@@ -253,9 +253,10 @@ def main():
         ref_ids_in_bib.append(entry.get('ID'))
     pprint.pprint(len(ref_ids_in_bib))
     archive_ids = get_notion_ref_ids2(ref_ids_in_bib)
+    pprint.pprint(len(archive_ids))
     pprint.pprint(archive_ids)
 
-    # # Iterate over the bib entries and 
+    # Iterate over the bib entries and 
     # update_archive = False
     # entries_to_archive = []
     # for entry in reversed(bibliography.entries):
