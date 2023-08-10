@@ -16,13 +16,9 @@ Sync changes in Paperpile to a Notion database.
 
 2. Get the **database identifier** from the database page. If your database url is:
 
-    ```
-    https://www.notion.so/my_workspace/aaaabbbbccccddddeeeeffffgggghhhh
-    ```
+    To get the database identifier of a Notion database, click on the ellipses of the table/database, then hit “View Database”, then click on the ellipses on the top right, click “Copy Link” and take the first hash from the resulting URL.
 
-    Then the database identifier is: `aaaabbbbccccddddeeeeffffgggghhhh`.
-
-3. Create a new integration on [https://www.notion.so/my-integrations/](https://www.notion.so/my-integrations/).
+4. Create a new integration on [https://www.notion.so/my-integrations/](https://www.notion.so/my-integrations/).
 
     1. Name: Paperpile to Notion
     2. Associated Workspace: Workspace of the database.
@@ -30,7 +26,7 @@ Sync changes in Paperpile to a Notion database.
     4. User Capabilities: Read user information, including email addresses.
     5. Press "Submit" and copy the **Internal Integration Token**.
 
-4. On the database page, click "Share" (top right) and add "Paperpile to Notion" with edit access.
+5. On the database page, click "Share" (top right) and add "Paperpile to Notion" with edit access.
 
 ### On GitHub
 
