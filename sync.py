@@ -85,7 +85,7 @@ def notion_add_entry(title='',
                      abstract='',
                      keywords=''):
            
-    pprint.pprint('inside notion_add_entry')
+    # pprint.pprint('inside notion_add_entry')
 
     url = "https://api.notion.com/v1/pages"
     payload = get_payload(title, authors, year, ref_id, link, abstract, keywords)
@@ -235,7 +235,7 @@ def main():
         # Create new page
         if ref_id not in archive_ids:
             # BUT IT IS IN THE LIST! WHAT IS HAPPENING??????????????????????????????????
-            pprint.pprint('Adding entry: ' + ref_id)
+            pprint.pprint('--> Adding entry: ' + ref_id)
             notion_add_entry(title=title,
                              authors=authors,
                              year=year,
@@ -247,7 +247,7 @@ def main():
 
         # Update existing page
         elif current_entry not in archive:
-            pprint.pprint('Updating entry: ' + ref_id)
+            pprint.pprint('--> Updating entry: ' + ref_id)
             page_id = notion_fetch_page(ref_id)
             if page_id != -1:
                 notion_update_page(page_id=page_id,
@@ -260,7 +260,7 @@ def main():
                                    keywords=keywords)
                 update_archive = True
             else:
-                pprint.pprint('Error: page_id == -1; Trying to add entry: ' + ref_id)
+                pprint.pprint('--> Error: page_id == -1; Trying to add entry: ' + ref_id)
                 notion_add_entry(title=title,
                                  authors=authors,
                                  year=year,
@@ -272,7 +272,7 @@ def main():
 
     # Only update the archive if necessary
     if update_archive and entries_to_archive:
-        pprint.pprint('Updating archive with ' + str(len(entries_to_archive)) + ' bibliography entries')
+        pprint.pprint('--> Updating archive with ' + str(len(entries_to_archive)) + ' bibliography entries')
         with open(ARCHIVE_PATH, 'w') as archive_file:
             archive = json.dump(entries_to_archive, archive_file)
 
