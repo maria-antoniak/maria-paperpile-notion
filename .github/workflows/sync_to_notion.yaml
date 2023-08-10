@@ -25,14 +25,6 @@ jobs:
           NOTION_TOKEN: ${{secrets.NOTION_TOKEN}}
           DATABASE_IDENTIFIER: ${{secrets.DATABASE_IDENTIFIER}}
 
-      - name: Update archive
-        run: |
-            git config --global user.email "antoniakmaria@gmail.com"
-            git config --global user.name "maria-antoniak"
-            git add .
-            git commit -am 'Update archive.'
-        shell: bash
-
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
