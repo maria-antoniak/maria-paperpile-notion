@@ -182,11 +182,41 @@ def get_notion_ref_ids(ref_ids_in_bib):
         results.extend(data["results"])
 
     ref_ids_in_notion = []
+    archive = []
     for _result in results:
-        ref_ids_in_notion.append(_result['properties']['Reference ID']['rich_text'][0]['plain_text'])
+        
+        ref_id = _result['properties']['Reference ID']['rich_text'][0]['plain_text']
+        title = ''
+        authors = ''
+        year = ''
+        link = _result['properties']['Link']['url']
+        abstract = ''
+        keywords = ''
 
-    return ref_ids_in_notion
-           
+        if _result['properties']['Title']['title']:
+            title = _result['properties']['Title']['title'][0]['plain_text']
+        if _result['properties']['Authors']['rich_text']:
+            authors = _result['properties']['Authors']['rich_text'][0]['plain_text']
+        if _result['properties']['Year']['rich_text']:
+            year = _result['properties']['Year']['rich_text'][0]['plain_text']
+        if _result['properties']['Abstract']['rich_text']:
+            abstract = _result['properties']['Abstract']['rich_text'][0]['plain_text']
+        if _result['properties']['Tags']['multiselect']:
+            for _keyword in _result['properties']['Tags']['multiselect']:
+                keywords.append(_result['properties']['Tags']['multiselect']['name']
+                   
+        archive.append({'title': title,
+                        'authors': authors,
+                        'year': year,
+                        'ref_id': ref_id,
+                        'link': link,
+                        'abstract': abstract,
+                        'keywords': keywords})
+               
+        ref_ids_in_notion.append(ref_id)
+               
+    return ref_ids_in_notion, archive
+
 
 def clean_str(string):
     string = string.strip()
@@ -255,10 +285,11 @@ def main():
     for entry in reversed(bibliography.entries):
         ref_ids_in_bib.append(entry.get('ID'))
     pprint.pprint(len(ref_ids_in_bib))
-    archive_ids = get_notion_ref_ids(ref_ids_in_bib)
+    archive_ids, archive = get_notion_ref_ids(ref_ids_in_bib)
     pprint.pprint(len(archive_ids))
     pprint.pprint(archive_ids)
     pprint.pprint('NUMBER OF PAPERS TO ADD:' + str(len(ref_ids_in_bib) - len(archive_ids)))
+    pprint.pprint(archive)
 
     # Iterate over the bib entries and 
     # update_archive = False
@@ -311,7 +342,7 @@ def main():
 
         # Update existing page
         elif current_entry not in archive:
-            # TODO need to pull full archive from Notion, not just Ref IDs!!!!!!!!!!!!!!!
+            pprint.pprint('CURRENT_ENTRY')
             page_id = notion_fetch_page(ref_id)
             if page_id != -1:
                 pprint.pprint('--> Updating entry: ' + ref_id)
