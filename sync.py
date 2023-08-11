@@ -90,7 +90,7 @@ def notion_add_entry(formatted_entry):
     response = requests.post(url, json=payload, headers=HEADERS)
     pprint.pprint(response)
     pprint.pprint(response.reason)
-    if response.raise_for_status():
+    if response.status_code == 400:
         pprint.pprint('YESSSSSSSSSSSS')
     
 
