@@ -88,7 +88,9 @@ def notion_add_entry(formatted_entry):
                           formatted_entry['keywords'])
     
     response = requests.post(url, json=payload, headers=HEADERS)
-    pprint.pprint(response)
+    pprint.pprint(response, response.reason)
+    if response.raise_for_status():
+        pprint.pprint('YESSSSSSSSSSSS')
     
 
 def notion_update_page(page_id,
