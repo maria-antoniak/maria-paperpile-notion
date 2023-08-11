@@ -297,7 +297,7 @@ def main():
     # Load the bib file from Paperpile
     # with open(BIB_PATH) as bib_file:
         # bibliography = bibtexparser.load(bib_file, parser=parser)
-    bibliography = bibtexparser.parse_file(bib_file)
+    bibliography = bibtexparser.parse_file(BIB_PATH)
 
     ref_ids_in_bib = []
     for entry in reversed(bibliography.entries):
