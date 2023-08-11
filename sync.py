@@ -259,7 +259,7 @@ def get_bib_entry(entry):
     #     title = clean_str(title)
     #     title = title
     if 'title' in bib_dict:
-        title = bib_dict['title']
+        title = str(bib_dict['title'])
         title = clean_str(title)
         title = title
     pprint.pprint(title)
