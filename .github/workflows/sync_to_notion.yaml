@@ -18,7 +18,7 @@ jobs:
             python3 --version
             python3 -m pip install -U pip
             pip3 install requests
-            pip3 install --no-cache-dir --force-reinstall git+https://github.com/sciunto-org/python-bibtexparser@main
+            pip install --pre bibtexparser
 
       - name: Sync to notion
         run: python sync.py
