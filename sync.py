@@ -4,6 +4,7 @@ import json
 import os
 import pickle
 import pprint
+import re
 import requests
 
 """
@@ -298,6 +299,8 @@ def get_bib_entry(entry):
 
     if 'keywords' in bib_dict:
         keywords = sorted(list(set([k.strip() for k in bib_dict['keywords'].value.lower().split(';')])))
+        keywords = [' '.join(k.split()) for k in keywords]
+        keywords = [re.sub(r'[^A-Za-z0-1\s&-]', k, '') for k in keywords] 
     # pprint.pprint(keywords)
 
     formatted_entry = {'title': title,
