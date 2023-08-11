@@ -289,14 +289,15 @@ def main():
 
     # Instantiate the parser
     # parser = bibtexparser.bparser.BibTexParser()
-    parser = bibtexparser.BibTexParser()
+    # parser = bibtexparser.BibTexParser()
     parser.ignore_nonstandard_types = True
     parser.homogenize_fields = False
     parser.interpolate_strings = False
 
     # Load the bib file from Paperpile
     with open(BIB_PATH) as bib_file:
-        bibliography = bibtexparser.load(bib_file, parser=parser)
+        # bibliography = bibtexparser.load(bib_file, parser=parser)
+        bibliography = bibtexparser.parse_file(bib_file)
 
     ref_ids_in_bib = []
     for entry in reversed(bibliography.entries):
