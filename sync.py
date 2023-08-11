@@ -290,9 +290,9 @@ def main():
     # Instantiate the parser
     # parser = bibtexparser.bparser.BibTexParser()
     # parser = bibtexparser.BibTexParser()
-    parser.ignore_nonstandard_types = True
-    parser.homogenize_fields = False
-    parser.interpolate_strings = False
+    # parser.ignore_nonstandard_types = True
+    # parser.homogenize_fields = False
+    # parser.interpolate_strings = False
 
     # Load the bib file from Paperpile
     with open(BIB_PATH) as bib_file:
