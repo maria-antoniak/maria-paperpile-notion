@@ -259,8 +259,6 @@ def get_bib_entry(entry):
     #     title = clean_str(title)
     #     title = title
     if 'title' in bib_dict:
-        pprint.pprint(bib_dict['title'])
-        pprint.pprint(dir(bib_dict['title']))
         title = bib_dict['title'].value
         title = clean_str(title)
         title = title
@@ -273,7 +271,7 @@ def get_bib_entry(entry):
     #     authors = clean_str(authors)
     #     authors = format_authors(authors)
     if 'author' in bib_dict:
-        authors = bib_dict['author']
+        authors = bib_dict['author'].value
         authors = authors.replace(' and ', '; ')
         authors = authors.replace(' And ', '; ')
         authors = clean_str(authors)
@@ -283,7 +281,7 @@ def get_bib_entry(entry):
     # if bib_dict.get('year', ''):
     #     year = bib_dict.get('year', '')
     if 'year' in bib_dict:
-        year = bib_dict['year']
+        year = bib_dict['year'].value
     pprint.pprint(year)
 
     if 'url' in bib_dict:
@@ -291,11 +289,11 @@ def get_bib_entry(entry):
     pprint.pprint(link)
 
     if 'abstract' in bib_dict:
-        abstract = bib_dict['abstract']
+        abstract = bib_dict['abstract'].value
     pprint.pprint(abstract)
 
     if 'keywords' in bib_dict:
-        keywords = sorted(list(set([k.strip() for k in bib_dict['keywords'].lower().split(';')])))
+        keywords = sorted(list(set([k.strip() for k in bib_dict['keywords'].value.lower().split(';')])))
     pprint.pprint(keywords)
 
     formatted_entry = {'title': title,
