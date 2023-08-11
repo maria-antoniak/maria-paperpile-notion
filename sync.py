@@ -301,6 +301,7 @@ def main():
 
     ref_ids_in_bib = []
     for entry in reversed(bibliography.entries):
+        pprint.pprint(entry)
         ref_ids_in_bib.append(entry.get('ID'))
     pprint.pprint(len(ref_ids_in_bib))
            
