@@ -264,7 +264,7 @@ def get_bib_entry(entry):
         authors = authors.replace(' And ', '; ')
         authors = clean_str(authors)
         authors = format_authors(authors)
-     pprint.pprint(authors)
+    pprint.pprint(authors)
            
     if bib_dict.get('year', ''):
         year = bib_dict.get('year', '')
