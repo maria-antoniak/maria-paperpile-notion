@@ -251,7 +251,7 @@ def get_bib_entry(entry):
 
     bib_dict = entry.fields_dict
 
-    ref_id = bib_dict.key
+    ref_id = entry.key
     pprint.pprint(ref_id)
 
     if bib_dict.get('title', ''):
