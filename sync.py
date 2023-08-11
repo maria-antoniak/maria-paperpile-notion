@@ -108,7 +108,7 @@ def notion_update_page(page_id,
 def delete_page(page_id):
     url = f"https://api.notion.com/v1/pages/{page_id}"
     payload = {"archived": True}
-    response = requests.patch(url, json=payload, headers=headers)
+    response = requests.patch(url, json=payload, headers=HEADERS)
     pprint.pprint(response)
 
 
