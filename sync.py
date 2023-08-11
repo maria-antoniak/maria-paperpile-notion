@@ -249,32 +249,31 @@ def get_bib_entry(entry):
 
     bib_dict = entry.fields_dict
 
+    ref_id = bib_dict.key
+
     if bib_dict.get('title', ''):
-        title = entry.get('title', '')
+        title = bib_dict.get('title', '')
         title = clean_str(title)
         title = title
 
-    if entry.get('author', ''):
-        authors = entry.get('author', '')
+    if bib_dict.get('author', ''):
+        authors = bib_dict.get('author', '')
         authors = authors.replace(' and ', '; ')
         authors = authors.replace(' And ', '; ')
         authors = clean_str(authors)
         authors = format_authors(authors)
+           
+    if bib_dict.get('year', ''):
+        year = bib_dict.get('year', '')
 
-    if entry.get('year', ''):
-        year = entry.get('year', '')
+    if bib_dict.get('url', ''):
+        link = bib_dict.get('url', '')
 
-    if entry.get('url', ''):
-        link = entry.get('url', '')
+    if bib_dict.get('abstract', ''):
+        abstract = bib_dict.get('abstract', '')
 
-    if entry.get('ID'):
-        ref_id = entry.get('ID')
-
-    if entry.get('abstract', ''):
-        abstract = entry.get('abstract', '')
-
-    if entry.get('keywords', ''):
-        keywords = sorted(list(set([k.strip() for k in entry.get('keywords', '').lower().split(';')])))
+    if bib_dict.get('keywords', ''):
+        keywords = sorted(list(set([k.strip() for k in bib_dict.get('keywords', '').lower().split(';')])))
 
     formatted_entry = {'title': title,
                        'authors': authors,
@@ -332,7 +331,6 @@ def main():
     for entry in reversed(bibliography.entries):
 
         ref_id, formatted_entry = get_bib_entry(entry) 
-        pprint.pprint(ref_id)
 
     #     # Create new page if it doesn't already exist in Notion
     #     if ref_id not in ref_ids_in_notion:
