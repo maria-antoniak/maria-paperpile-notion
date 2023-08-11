@@ -305,7 +305,7 @@ def main():
         # pprint.pprint(dir(entry))
         # pprint.pprint(entry.fields)
         # pprint.pprint(entry.fields_dict)
-        pprint.pprtin(entry.key)
+        pprint.pprint(entry.key)
         ref_ids_in_bib.append(entry.key)
     pprint.pprint(len(ref_ids_in_bib))
            
