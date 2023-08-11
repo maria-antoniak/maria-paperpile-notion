@@ -301,10 +301,20 @@ def main():
     for entry in reversed(bibliography.entries):
         ref_ids_in_bib.append(entry.get('ID'))
     pprint.pprint(len(ref_ids_in_bib))
+           
     ref_ids_in_notion, notion_entries, ref_id_notion_entry_dict = get_notion_ref_ids()
     pprint.pprint(len(ref_ids_in_notion))
-    pprint.pprint('NUMBER OF PAPERS TO ADD: ' + str(len(ref_ids_in_bib) - len(ref_ids_in_notion)))
-    pprint.pprint('NUMBER OF PAPERS TO DELETE: ' + str(len(ref_ids_in_notion) - len(ref_ids_in_bib)))
+
+    ref_ids_to_add = [ref_id for ref_id in ref_ids_in_bib if ref_id not in ref_ids_in_notion]
+    ref_ids_to_delete = [ref_id for ref_id in ref_ids_in_notion if ref_id not in ref_ids_in_bib]
+
+    if ref_ids_to_add > 0:
+        pprint.pprint('NUMBER OF PAPERS TO ADD: ' + str(ref_ids_to_add))
+        pprint.pprint(ref_ids_to_add)
+    if ref_ids_to_delete > 0:
+        pprint.pprint('NUMBER OF PAPERS TO DELETE: ' + str(ref_ids_to_delete))
+        pprint.pprint(ref_ids_to_delete)
+        
 
     # # Iterate over the bib entries and either add a new database row or update the row in Notion
     # for entry in reversed(bibliography.entries):
@@ -340,14 +350,14 @@ def main():
     #             notion_add_entry(formatted_entry)
 
     # Look for papers in Notion that no longer exist in the bib file and delete them
-    for ref_id in ref_ids_in_notion:
-        if ref_id not in ref_ids_in_bib:
-            pprint.pprint(ref_ids_in_bib)
-            pprint.pprint('==================================================')
-            pprint.pprint('Deleting entry: ' + ref_id)
-            pprint.pprint('==================================================')
-            page_id = notion_fetch_page(ref_id)
-            delete_page(page_id)
+    # for ref_id in ref_ids_in_notion:
+    #     if ref_id not in ref_ids_in_bib:
+    #         pprint.pprint(ref_ids_in_bib)
+    #         pprint.pprint('==================================================')
+    #         pprint.pprint('Deleting entry: ' + ref_id)
+    #         pprint.pprint('==================================================')
+    #         page_id = notion_fetch_page(ref_id)
+    #         delete_page(page_id)
 
 
 if __name__ == "__main__":
