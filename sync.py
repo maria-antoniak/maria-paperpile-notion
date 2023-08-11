@@ -301,10 +301,11 @@ def main():
 
     ref_ids_in_bib = []
     for entry in reversed(bibliography.entries):
-        pprint.pprint(entry)
-        pprint.pprint(dir(entry))
-        pprint.pprint(entry.fields)
-        pprint.pprint(entry.fields_dict)
+        # pprint.pprint(entry)
+        # pprint.pprint(dir(entry))
+        # pprint.pprint(entry.fields)
+        # pprint.pprint(entry.fields_dict)
+        pprint.pprtin(entry.key)
         ref_ids_in_bib.append(entry.key)
     pprint.pprint(len(ref_ids_in_bib))
            
