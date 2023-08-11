@@ -314,7 +314,10 @@ def main():
     if len(ref_ids_to_delete) > 0:
         pprint.pprint('NUMBER OF PAPERS TO DELETE: ' + str(len(ref_ids_to_delete)))
         pprint.pprint(ref_ids_to_delete)
-        
+
+    pprint.pprint('==================================================')
+    pprint.pprint('ALL REF IDS')
+    pprint.pprint(ref_ids_in_bib)
 
     # # Iterate over the bib entries and either add a new database row or update the row in Notion
     # for entry in reversed(bibliography.entries):
