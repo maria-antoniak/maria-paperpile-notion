@@ -91,7 +91,18 @@ def notion_add_entry(formatted_entry):
     pprint.pprint(response)
     pprint.pprint(response.reason)
     if response.status_code == 400:
-        pprint.pprint('YESSSSSSSSSSSS')
+        payload = get_payload(formatted_entry['title'], 
+                              formatted_entry['authors'],  
+                              formatted_entry['year'], 
+                              formatted_entry['ref_id'],  
+                              formatted_entry['link'],  
+                              formatted_entry['abstract'],  
+                              [])
+        response = requests.post(url, json=payload, headers=HEADERS)
+        pprint.pprint(response)
+        pprint.pprint(response.reason)
+        if response.status_code == 400:
+            pprint.pprint('STILL FAILED')
     
 
 def notion_update_page(page_id,
