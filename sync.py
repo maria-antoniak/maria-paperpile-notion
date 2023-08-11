@@ -301,6 +301,7 @@ def get_bib_entry(entry):
         keywords = sorted(list(set([k.strip() for k in bib_dict['keywords'].value.lower().split(';')])))
         keywords = [' '.join(k.split()) for k in keywords]
         keywords = [re.sub(r'[^A-Za-z0-1\s&-]', k, '') for k in keywords] 
+        keywords = [k for k in keywords if k.strip()]
     # pprint.pprint(keywords)
 
     formatted_entry = {'title': title,
