@@ -105,6 +105,13 @@ def notion_update_page(page_id,
     pprint.pprint(response)
 
 
+def delete_page(page_id):
+    url = f"https://api.notion.com/v1/pages/{page_id}"
+    payload = {"archived": True}
+    response = requests.patch(url, json=payload, headers=headers)
+    pprint.pprint(response)
+
+
 def notion_fetch_page(ref_id):
     url = f"https://api.notion.com/v1/databases/{DATABASE_IDENTIFIER}/query"
 
@@ -298,7 +305,7 @@ def main():
     pprint.pprint(len(archive_ids))
     pprint.pprint('NUMBER OF PAPERS TO ADD:' + str(len(ref_ids_in_bib) - len(archive_ids)))
 
-    # Iterate over the bib entries and 
+    # Iterate over the bib entries and either add a new database row or update the row in Notion
     for entry in reversed(bibliography.entries):
 
         ref_id, formatted_entry = get_bib_entry(entry)
@@ -330,6 +337,15 @@ def main():
             else:
                 pprint.pprint('--> Error: page_id == -1; Trying to add entry: ' + ref_id)
                 notion_add_entry(formatted_entry)
+
+    # Look for papers in Notion that no longer exist in the bib file and delete them
+    for ref_id in archive_ids:
+        if ref_id not in ref_ids_in_bib:
+            pprint.pprint('==================================================')
+            pprint.pprint('Deleting entry:' + ref_id)
+            pprint.pprint('==================================================')
+            page_id = notion_fetch_page(ref_id)
+            delete_page(page_id)
 
 
 if __name__ == "__main__":
