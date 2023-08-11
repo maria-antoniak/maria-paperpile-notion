@@ -254,22 +254,12 @@ def get_bib_entry(entry):
     ref_id = entry.key
     pprint.pprint(ref_id)
 
-    # if bib_dict.get('title', ''):
-    #     title = bib_dict.get('title', '')
-    #     title = clean_str(title)
-    #     title = title
     if 'title' in bib_dict:
         title = bib_dict['title'].value
         title = clean_str(title)
         title = title
     pprint.pprint(title)
 
-    # if bib_dict.get('author', ''):
-    #     authors = bib_dict.get('author', '')
-    #     authors = authors.replace(' and ', '; ')
-    #     authors = authors.replace(' And ', '; ')
-    #     authors = clean_str(authors)
-    #     authors = format_authors(authors)
     if 'author' in bib_dict:
         authors = bib_dict['author'].value
         authors = authors.replace(' and ', '; ')
@@ -278,14 +268,12 @@ def get_bib_entry(entry):
         authors = format_authors(authors)
     pprint.pprint(authors)
            
-    # if bib_dict.get('year', ''):
-    #     year = bib_dict.get('year', '')
     if 'year' in bib_dict:
         year = bib_dict['year'].value
     pprint.pprint(year)
 
     if 'url' in bib_dict:
-        link = bib_dict['url']
+        link = bib_dict['url'].value
     pprint.pprint(link)
 
     if 'abstract' in bib_dict:
