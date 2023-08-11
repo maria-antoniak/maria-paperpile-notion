@@ -303,9 +303,9 @@ def main():
     for entry in reversed(bibliography.entries):
         pprint.pprint(entry)
         pprint.pprint(dir(entry))
-        pprint.pprint(entry.fields())
-        pprint.pprint(entry.fields_dict())
-        ref_ids_in_bib.append(entry.key())
+        pprint.pprint(entry.fields)
+        pprint.pprint(entry.fields_dict)
+        ref_ids_in_bib.append(entry.key)
     pprint.pprint(len(ref_ids_in_bib))
            
     ref_ids_in_notion, notion_entries, ref_id_notion_entry_dict = get_notion_ref_ids()
