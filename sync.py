@@ -247,6 +247,8 @@ def get_bib_entry(entry):
     abstract = ''
     keywords = []
 
+    pprint.pprint('GETTING BIB ENTRY')
+
     bib_dict = entry.fields_dict
 
     ref_id = bib_dict.key
