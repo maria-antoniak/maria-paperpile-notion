@@ -261,7 +261,7 @@ def get_bib_entry(entry):
     if 'title' in bib_dict:
         pprint.pprint(bib_dict['title'])
         pprint.pprint(dir(bib_dict['title']))
-        title = bib_dict['title'].value()
+        title = bib_dict['title'].value
         title = clean_str(title)
         title = title
     pprint.pprint(title)
