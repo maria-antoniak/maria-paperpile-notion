@@ -174,6 +174,7 @@ def get_notion_ref_ids():
             year = _result['properties']['Year']['rich_text'][0]['plain_text']
         if _result['properties']['Abstract']['rich_text']:
             abstract = _result['properties']['Abstract']['rich_text'][0]['plain_text']
+            abstract = ' '.join(abstract.split())
         if _result['properties']['Tags']['multi_select']:
             for _keyword in _result['properties']['Tags']['multi_select']:
                 keywords.append(_keyword['name'].lower().strip())
@@ -278,6 +279,7 @@ def get_bib_entry(entry):
 
     if 'abstract' in bib_dict:
         abstract = bib_dict['abstract'].value
+        abstract = ' '.join(abstract.split())
     # pprint.pprint(abstract)
 
     if 'keywords' in bib_dict:
