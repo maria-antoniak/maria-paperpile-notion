@@ -247,7 +247,7 @@ def get_bib_entry(entry):
     abstract = ''
     keywords = []
 
-    bib_dict = entry.field_dict
+    bib_dict = entry.fields_dict
 
     if bib_dict.get('title', ''):
         title = entry.get('title', '')
