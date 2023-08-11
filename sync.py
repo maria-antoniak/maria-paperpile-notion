@@ -254,34 +254,46 @@ def get_bib_entry(entry):
     ref_id = entry.key
     pprint.pprint(ref_id)
 
-    if bib_dict.get('title', ''):
-        title = bib_dict.get('title', '')
+    # if bib_dict.get('title', ''):
+    #     title = bib_dict.get('title', '')
+    #     title = clean_str(title)
+    #     title = title
+    if 'title' in bib_dict:
+        title = bib_dict['title']
         title = clean_str(title)
         title = title
     pprint.pprint(title)
 
-    if bib_dict.get('author', ''):
-        authors = bib_dict.get('author', '')
+    # if bib_dict.get('author', ''):
+    #     authors = bib_dict.get('author', '')
+    #     authors = authors.replace(' and ', '; ')
+    #     authors = authors.replace(' And ', '; ')
+    #     authors = clean_str(authors)
+    #     authors = format_authors(authors)
+    if 'author' in bib_dict:
+        authors = bib_dict['author']
         authors = authors.replace(' and ', '; ')
         authors = authors.replace(' And ', '; ')
         authors = clean_str(authors)
         authors = format_authors(authors)
     pprint.pprint(authors)
            
-    if bib_dict.get('year', ''):
-        year = bib_dict.get('year', '')
+    # if bib_dict.get('year', ''):
+    #     year = bib_dict.get('year', '')
+    if 'year' in bib_dict:
+        year = bib_dict['year']
     pprint.pprint(year)
 
-    if bib_dict.get('url', ''):
-        link = bib_dict.get('url', '')
+    if 'url' in bib_dict:
+        link = bib_dict['url']
     pprint.pprint(link)
 
-    if bib_dict.get('abstract', ''):
-        abstract = bib_dict.get('abstract', '')
+    if 'abstract' in bib_dict:
+        abstract = bib_dict['abstract']
     pprint.pprint(abstract)
 
-    if bib_dict.get('keywords', ''):
-        keywords = sorted(list(set([k.strip() for k in bib_dict.get('keywords', '').lower().split(';')])))
+    if 'keywords' in bib_dict:
+        keywords = sorted(list(set([k.strip() for k in bib_dict['keywords'].lower().split(';')])))
     pprint.pprint(keywords)
 
     formatted_entry = {'title': title,
