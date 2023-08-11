@@ -308,11 +308,11 @@ def main():
     ref_ids_to_add = [ref_id for ref_id in ref_ids_in_bib if ref_id not in ref_ids_in_notion]
     ref_ids_to_delete = [ref_id for ref_id in ref_ids_in_notion if ref_id not in ref_ids_in_bib]
 
-    if ref_ids_to_add > 0:
-        pprint.pprint('NUMBER OF PAPERS TO ADD: ' + str(ref_ids_to_add))
+    if len(ref_ids_to_add) > 0:
+        pprint.pprint('NUMBER OF PAPERS TO ADD: ' + str(len(ref_ids_to_add)))
         pprint.pprint(ref_ids_to_add)
-    if ref_ids_to_delete > 0:
-        pprint.pprint('NUMBER OF PAPERS TO DELETE: ' + str(ref_ids_to_delete))
+    if len(ref_ids_to_delete) > 0:
+        pprint.pprint('NUMBER OF PAPERS TO DELETE: ' + str(len(ref_ids_to_delete)))
         pprint.pprint(ref_ids_to_delete)
         
 
