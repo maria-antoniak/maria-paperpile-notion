@@ -247,10 +247,12 @@ def get_bib_entry(entry):
     abstract = ''
     keywords = []
 
-    if entry.get('title', ''):
-               title = entry.get('title', '')
-               title = clean_str(title)
-               title = title
+    bib_dict = entry.field_dict
+
+    if bib_dict.get('title', ''):
+        title = entry.get('title', '')
+        title = clean_str(title)
+        title = title
 
     if entry.get('author', ''):
         authors = entry.get('author', '')
@@ -305,7 +307,7 @@ def main():
         # pprint.pprint(dir(entry))
         # pprint.pprint(entry.fields)
         # pprint.pprint(entry.fields_dict)
-        pprint.pprint(entry.key)
+        # pprint.pprint(entry.key)
         ref_ids_in_bib.append(entry.key)
     pprint.pprint(len(ref_ids_in_bib))
            
@@ -322,14 +324,14 @@ def main():
         pprint.pprint('NUMBER OF PAPERS TO DELETE: ' + str(len(ref_ids_to_delete)))
         pprint.pprint(ref_ids_to_delete)
 
-    pprint.pprint('==================================================')
-    pprint.pprint('ALL REF IDS')
-    pprint.pprint(ref_ids_in_bib)
+    # pprint.pprint('==================================================')
+    # pprint.pprint('ALL REF IDS')
+    # pprint.pprint(ref_ids_in_bib)
 
-    # # Iterate over the bib entries and either add a new database row or update the row in Notion
-    # for entry in reversed(bibliography.entries):
+    # Iterate over the bib entries and either add a new database row or update the row in Notion
+    for entry in reversed(bibliography.entries):
 
-    #     ref_id, formatted_entry = get_bib_entry(entry)
+        ref_id, formatted_entry = get_bib_entry(entry)
 
     #     # Create new page if it doesn't already exist in Notion
     #     if ref_id not in ref_ids_in_notion:
