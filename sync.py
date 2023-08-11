@@ -132,10 +132,10 @@ def notion_fetch_page(ref_id):
     return -1
 
 
-def get_notion_ref_ids(ref_ids_in_bib):
+def get_notion_ref_ids():
     url = f"https://api.notion.com/v1/databases/{DATABASE_IDENTIFIER}/query"
 
-    page_size = len(ref_ids_in_bib)
+    page_size = 100
 
     payload = {"page_size": page_size}
     response = requests.post(url, json=payload, headers=HEADERS)
@@ -301,48 +301,50 @@ def main():
     for entry in reversed(bibliography.entries):
         ref_ids_in_bib.append(entry.get('ID'))
     pprint.pprint(len(ref_ids_in_bib))
-    archive_ids, archive, id_archive_dict = get_notion_ref_ids(ref_ids_in_bib)
-    pprint.pprint(len(archive_ids))
-    pprint.pprint('NUMBER OF PAPERS TO ADD:' + str(len(ref_ids_in_bib) - len(archive_ids)))
+    ref_ids_in_notion, notion_entries, ref_id_notion_entry_dict = get_notion_ref_ids()
+    pprint.pprint(len(ref_ids_in_notion))
+    pprint.pprint('NUMBER OF PAPERS TO ADD: ' + str(len(ref_ids_in_bib) - len(ref_ids_in_notion)))
+    pprint.pprint('NUMBER OF PAPERS TO DELETE: ' + str(len(ref_ids_in_notion) - len(ref_ids_in_bib)))
 
-    # Iterate over the bib entries and either add a new database row or update the row in Notion
-    for entry in reversed(bibliography.entries):
+    # # Iterate over the bib entries and either add a new database row or update the row in Notion
+    # for entry in reversed(bibliography.entries):
 
-        ref_id, formatted_entry = get_bib_entry(entry)
+    #     ref_id, formatted_entry = get_bib_entry(entry)
 
-        # Create new page if it doesn't already exist in NOtion
-        if ref_id not in archive_ids:
-            pprint.pprint('==================================================')
-            pprint.pprint('Adding entry: ' + ref_id)
-            pprint.pprint('==================================================')
-            pprint.pprint(formatted_entry)
-            notion_add_entry(formatted_entry)
+    #     # Create new page if it doesn't already exist in Notion
+    #     if ref_id not in ref_ids_in_notion:
+    #         pprint.pprint('==================================================')
+    #         pprint.pprint('Adding entry: ' + ref_id)
+    #         pprint.pprint('==================================================')
+    #         pprint.pprint(formatted_entry)
+    #         notion_add_entry(formatted_entry)
 
-        # Update existing page
-        elif formatted_entry not in archive:
-            pprint.pprint('==================================================')
-            pprint.pprint('Updating entry:' + ref_id)
-            pprint.pprint('==================================================')
-            pprint.pprint('FORMATTED ENTRY FROM BIB')
-            pprint.pprint(formatted_entry)
-            pprint.pprint('CLOSEST ENTRY IN NOTION')
-            if ref_id in id_archive_dict:
-                pprint.pprint(id_archive_dict[ref_id])
-            else:
-                pprint.pprint('ref_ID not found in archive')
-            page_id = notion_fetch_page(ref_id)
-            if page_id != -1:
-                notion_update_page(page_id,
-                                   formatted_entry)
-            else:
-                pprint.pprint('--> Error: page_id == -1; Trying to add entry: ' + ref_id)
-                notion_add_entry(formatted_entry)
+    #     # Update existing page
+    #     elif formatted_entry not in notion_entries:
+    #         pprint.pprint('==================================================')
+    #         pprint.pprint('Updating entry: ' + ref_id)
+    #         pprint.pprint('==================================================')
+    #         pprint.pprint('FORMATTED ENTRY FROM BIB')
+    #         pprint.pprint(formatted_entry)
+    #         pprint.pprint('CLOSEST ENTRY IN NOTION')
+    #         if ref_id in ref_id_notion_entry_dict:
+    #             pprint.pprint(ref_id_notion_entry_dict[ref_id])
+    #         else:
+    #             pprint.pprint('ref_ID not found in Notion')
+    #         page_id = notion_fetch_page(ref_id)
+    #         if page_id != -1:
+    #             notion_update_page(page_id,
+    #                                formatted_entry)
+    #         else:
+    #             pprint.pprint('--> Error: page_id == -1; Trying to add entry: ' + ref_id)
+    #             notion_add_entry(formatted_entry)
 
     # Look for papers in Notion that no longer exist in the bib file and delete them
-    for ref_id in archive_ids:
+    for ref_id in ref_ids_in_notion:
         if ref_id not in ref_ids_in_bib:
+            pprint.pprint(ref_ids_in_bib)
             pprint.pprint('==================================================')
-            pprint.pprint('Deleting entry:' + ref_id)
+            pprint.pprint('Deleting entry: ' + ref_id)
             pprint.pprint('==================================================')
             page_id = notion_fetch_page(ref_id)
             delete_page(page_id)
