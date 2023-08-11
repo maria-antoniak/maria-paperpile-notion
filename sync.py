@@ -250,11 +250,13 @@ def get_bib_entry(entry):
     bib_dict = entry.fields_dict
 
     ref_id = bib_dict.key
+    pprint.pprint(ref_id)
 
     if bib_dict.get('title', ''):
         title = bib_dict.get('title', '')
         title = clean_str(title)
         title = title
+    pprint.pprint(title)
 
     if bib_dict.get('author', ''):
         authors = bib_dict.get('author', '')
@@ -262,18 +264,23 @@ def get_bib_entry(entry):
         authors = authors.replace(' And ', '; ')
         authors = clean_str(authors)
         authors = format_authors(authors)
+     pprint.pprint(authors)
            
     if bib_dict.get('year', ''):
         year = bib_dict.get('year', '')
+    pprint.pprint(year)
 
     if bib_dict.get('url', ''):
         link = bib_dict.get('url', '')
+    pprint.pprint(link)
 
     if bib_dict.get('abstract', ''):
         abstract = bib_dict.get('abstract', '')
+    pprint.pprint(abstract)
 
     if bib_dict.get('keywords', ''):
         keywords = sorted(list(set([k.strip() for k in bib_dict.get('keywords', '').lower().split(';')])))
+    pprint.pprint(keywords)
 
     formatted_entry = {'title': title,
                        'authors': authors,
