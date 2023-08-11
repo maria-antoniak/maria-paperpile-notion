@@ -331,7 +331,8 @@ def main():
     # Iterate over the bib entries and either add a new database row or update the row in Notion
     for entry in reversed(bibliography.entries):
 
-        ref_id, formatted_entry = get_bib_entry(entry)
+        ref_id, formatted_entry = get_bib_entry(entry) 
+        pprint.pprint(ref_id)
 
     #     # Create new page if it doesn't already exist in Notion
     #     if ref_id not in ref_ids_in_notion:
