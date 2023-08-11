@@ -288,7 +288,8 @@ def get_bib_entry(entry):
 def main():
 
     # Instantiate the parser
-    parser = bibtexparser.bparser.BibTexParser()
+    # parser = bibtexparser.bparser.BibTexParser()
+    parser = bibtexparser.BibTexParser()
     parser.ignore_nonstandard_types = True
     parser.homogenize_fields = False
     parser.interpolate_strings = False
