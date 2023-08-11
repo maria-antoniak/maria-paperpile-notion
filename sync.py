@@ -369,7 +369,7 @@ def main():
                 pprint.pprint('--> Error: page_id == -1; Trying to add entry: ' + ref_id)
                 notion_add_entry(formatted_entry)
 
-    Look for papers in Notion that no longer exist in the bib file and delete them
+    # Look for papers in Notion that no longer exist in the bib file and delete them
     for ref_id in ref_ids_in_notion:
         if ref_id not in ref_ids_in_bib:
             pprint.pprint(ref_ids_in_bib)
