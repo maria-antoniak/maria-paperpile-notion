@@ -247,18 +247,18 @@ def get_bib_entry(entry):
     abstract = ''
     keywords = []
 
-    pprint.pprint('GETTING BIB ENTRY')
+    # pprint.pprint('GETTING BIB ENTRY')
 
     bib_dict = entry.fields_dict
 
     ref_id = entry.key
-    pprint.pprint(ref_id)
+    # pprint.pprint(ref_id)
 
     if 'title' in bib_dict:
         title = bib_dict['title'].value
         title = clean_str(title)
         title = title
-    pprint.pprint(title)
+    # pprint.pprint(title)
 
     if 'author' in bib_dict:
         authors = bib_dict['author'].value
@@ -266,23 +266,23 @@ def get_bib_entry(entry):
         authors = authors.replace(' And ', '; ')
         authors = clean_str(authors)
         authors = format_authors(authors)
-    pprint.pprint(authors)
+    # pprint.pprint(authors)
            
     if 'year' in bib_dict:
         year = bib_dict['year'].value
-    pprint.pprint(year)
+    # pprint.pprint(year)
 
     if 'url' in bib_dict:
         link = bib_dict['url'].value
-    pprint.pprint(link)
+    # pprint.pprint(link)
 
     if 'abstract' in bib_dict:
         abstract = bib_dict['abstract'].value
-    pprint.pprint(abstract)
+    # pprint.pprint(abstract)
 
     if 'keywords' in bib_dict:
         keywords = sorted(list(set([k.strip() for k in bib_dict['keywords'].value.lower().split(';')])))
-    pprint.pprint(keywords)
+    # pprint.pprint(keywords)
 
     formatted_entry = {'title': title,
                        'authors': authors,
@@ -317,10 +317,10 @@ def main():
         # pprint.pprint(entry.fields_dict)
         # pprint.pprint(entry.key)
         ref_ids_in_bib.append(entry.key)
-    pprint.pprint(len(ref_ids_in_bib))
+    # pprint.pprint(len(ref_ids_in_bib))
            
     ref_ids_in_notion, notion_entries, ref_id_notion_entry_dict = get_notion_ref_ids()
-    pprint.pprint(len(ref_ids_in_notion))
+    # pprint.pprint(len(ref_ids_in_notion))
 
     ref_ids_to_add = [ref_id for ref_id in ref_ids_in_bib if ref_id not in ref_ids_in_notion]
     ref_ids_to_delete = [ref_id for ref_id in ref_ids_in_notion if ref_id not in ref_ids_in_bib]
@@ -341,43 +341,43 @@ def main():
 
         ref_id, formatted_entry = get_bib_entry(entry) 
 
-    #     # Create new page if it doesn't already exist in Notion
-    #     if ref_id not in ref_ids_in_notion:
-    #         pprint.pprint('==================================================')
-    #         pprint.pprint('Adding entry: ' + ref_id)
-    #         pprint.pprint('==================================================')
-    #         pprint.pprint(formatted_entry)
-    #         notion_add_entry(formatted_entry)
+        # Create new page if it doesn't already exist in Notion
+        if ref_id not in ref_ids_in_notion:
+            pprint.pprint('==================================================')
+            pprint.pprint('Adding entry: ' + ref_id)
+            pprint.pprint('==================================================')
+            pprint.pprint(formatted_entry)
+            notion_add_entry(formatted_entry)
 
-    #     # Update existing page
-    #     elif formatted_entry not in notion_entries:
-    #         pprint.pprint('==================================================')
-    #         pprint.pprint('Updating entry: ' + ref_id)
-    #         pprint.pprint('==================================================')
-    #         pprint.pprint('FORMATTED ENTRY FROM BIB')
-    #         pprint.pprint(formatted_entry)
-    #         pprint.pprint('CLOSEST ENTRY IN NOTION')
-    #         if ref_id in ref_id_notion_entry_dict:
-    #             pprint.pprint(ref_id_notion_entry_dict[ref_id])
-    #         else:
-    #             pprint.pprint('ref_ID not found in Notion')
-    #         page_id = notion_fetch_page(ref_id)
-    #         if page_id != -1:
-    #             notion_update_page(page_id,
-    #                                formatted_entry)
-    #         else:
-    #             pprint.pprint('--> Error: page_id == -1; Trying to add entry: ' + ref_id)
-    #             notion_add_entry(formatted_entry)
+        # Update existing page
+        elif formatted_entry not in notion_entries:
+            pprint.pprint('==================================================')
+            pprint.pprint('Updating entry: ' + ref_id)
+            pprint.pprint('==================================================')
+            pprint.pprint('FORMATTED ENTRY FROM BIB')
+            pprint.pprint(formatted_entry)
+            pprint.pprint('CLOSEST ENTRY IN NOTION')
+            if ref_id in ref_id_notion_entry_dict:
+                pprint.pprint(ref_id_notion_entry_dict[ref_id])
+            else:
+                pprint.pprint('ref_ID not found in Notion')
+            page_id = notion_fetch_page(ref_id)
+            if page_id != -1:
+                notion_update_page(page_id,
+                                   formatted_entry)
+            else:
+                pprint.pprint('--> Error: page_id == -1; Trying to add entry: ' + ref_id)
+                notion_add_entry(formatted_entry)
 
-    # Look for papers in Notion that no longer exist in the bib file and delete them
-    # for ref_id in ref_ids_in_notion:
-    #     if ref_id not in ref_ids_in_bib:
-    #         pprint.pprint(ref_ids_in_bib)
-    #         pprint.pprint('==================================================')
-    #         pprint.pprint('Deleting entry: ' + ref_id)
-    #         pprint.pprint('==================================================')
-    #         page_id = notion_fetch_page(ref_id)
-    #         delete_page(page_id)
+    Look for papers in Notion that no longer exist in the bib file and delete them
+    for ref_id in ref_ids_in_notion:
+        if ref_id not in ref_ids_in_bib:
+            pprint.pprint(ref_ids_in_bib)
+            pprint.pprint('==================================================')
+            pprint.pprint('Deleting entry: ' + ref_id)
+            pprint.pprint('==================================================')
+            page_id = notion_fetch_page(ref_id)
+            delete_page(page_id)
 
 
 if __name__ == "__main__":
