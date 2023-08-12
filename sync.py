@@ -313,7 +313,7 @@ def get_bib_entry(entry):
         keywords = [' '.join(k.split()) for k in keywords]
         keywords = [slugify(k) for k in keywords] 
         keywords = [k for k in keywords if k.strip()]
-        keywords = sorted(keywords)
+        keywords = sorted(list(set(keywords)))
     # pprint.pprint(keywords)
 
     formatted_entry = {'title': title,
