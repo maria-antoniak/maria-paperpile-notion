@@ -241,6 +241,14 @@ def clean_str(string):
     return string
 
 
+def clean_str_strict(s):
+    return re.sub(r'[^A-Za-z0-1\s&-.,;:\(\)"'&\\/?]+', '', s) 
+
+
+def clean_str_very_strict(s):
+    return re.sub(r'[^A-Za-z0-1\s&-]+', '', s) 
+           
+
 def format_authors(test_string):
     authors = [a.split(',') for a in test_string.split(';')]
     formatted_authors = [] 
@@ -273,7 +281,7 @@ def get_bib_entry(entry):
     if 'title' in bib_dict:
         title = bib_dict['title'].value
         title = clean_str(title)
-        title = title
+        title = clean_str_strict(title)
     # pprint.pprint(title)
 
     if 'author' in bib_dict:
@@ -286,6 +294,7 @@ def get_bib_entry(entry):
            
     if 'year' in bib_dict:
         year = bib_dict['year'].value
+        year = clean_str_very_strict(year)
     # pprint.pprint(year)
 
     if 'url' in bib_dict:
@@ -295,12 +304,13 @@ def get_bib_entry(entry):
     if 'abstract' in bib_dict:
         abstract = bib_dict['abstract'].value
         abstract = ' '.join(abstract.split())
+        abstract = clean_str_strict(abstract)
     # pprint.pprint(abstract)
 
     if 'keywords' in bib_dict:
         keywords = sorted(list(set([k.strip() for k in bib_dict['keywords'].value.lower().split(';')])))
         keywords = [' '.join(k.split()) for k in keywords]
-        keywords = [re.sub(r'[^A-Za-z0-1\s&-]', k, '') for k in keywords] 
+        keywords = [clean_str_very_strict(k) for k in keywords] 
         keywords = [k for k in keywords if k.strip()]
     # pprint.pprint(keywords)
 
