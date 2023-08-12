@@ -242,11 +242,11 @@ def get_notion_ref_ids():
 #     return string
 
 
+def clean_str(s):
+    return re.sub(r'[^A-Za-z0-9\s&.,\-;:/?()"\']+', '', s) 
+
+
 # def clean_str_strict(s):
-#     return re.sub(r'[^A-Za-z0-1\s&-.,;:\(\)"'&/?\]+', '', s) 
-
-
-# def clean_str_very_strict(s):
 #     return re.sub(r'[^A-Za-z0-1\s&-]+', '', s) 
            
 
@@ -281,20 +281,20 @@ def get_bib_entry(entry):
 
     if 'title' in bib_dict:
         title = bib_dict['title'].value
-        title = slugify(title)
+        title = clean_str(title)
     # pprint.pprint(title)
 
     if 'author' in bib_dict:
         authors = bib_dict['author'].value
         authors = authors.replace(' and ', '; ')
         authors = authors.replace(' And ', '; ')
-        authors = slugify(authors)
+        authors = clean_str(authors)
         authors = format_authors(authors)
     # pprint.pprint(authors)
            
     if 'year' in bib_dict:
         year = bib_dict['year'].value
-        year = slugify(year)
+        year = clean_str(year)
     # pprint.pprint(year)
 
     if 'url' in bib_dict:
@@ -304,7 +304,7 @@ def get_bib_entry(entry):
     if 'abstract' in bib_dict:
         abstract = bib_dict['abstract'].value
         abstract = ' '.join(abstract.split())
-        abstract = slugify(abstract)
+        abstract = clean_str(abstract)
     # pprint.pprint(abstract)
 
     if 'keywords' in bib_dict:
