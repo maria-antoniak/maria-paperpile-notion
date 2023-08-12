@@ -242,7 +242,7 @@ def clean_str(string):
 
 
 def clean_str_strict(s):
-    return re.sub(r'[^A-Za-z0-1\s&-.,;:\(\)"'&/?]+', '', s) 
+    return re.sub(r'[^A-Za-z0-1\s&-.,;:\(\)"'&/?\]+', '', s) 
 
 
 def clean_str_very_strict(s):
