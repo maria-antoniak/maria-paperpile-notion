@@ -243,7 +243,8 @@ def get_notion_ref_ids():
 
 
 def clean_str(s):
-    return re.sub(r'[^A-Za-z0-9\s&.,\-;:/?()"\']+', '', s) 
+    s = re.sub(r'[^A-Za-z0-9\s&.,\-;:/?()"\']+', '', s) 
+    return ' '.join(s.split())
 
 
 # def clean_str_strict(s):
