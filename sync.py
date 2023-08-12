@@ -6,6 +6,7 @@ import pickle
 import pprint
 import re
 import requests
+from slugify import slugify
 
 """
 TODO:
@@ -280,21 +281,20 @@ def get_bib_entry(entry):
 
     if 'title' in bib_dict:
         title = bib_dict['title'].value
-        title = clean_str(title)
-        title = clean_str_strict(title)
+        title = slugify(title)
     # pprint.pprint(title)
 
     if 'author' in bib_dict:
         authors = bib_dict['author'].value
         authors = authors.replace(' and ', '; ')
         authors = authors.replace(' And ', '; ')
-        authors = clean_str(authors)
+        authors = slugify(authors)
         authors = format_authors(authors)
     # pprint.pprint(authors)
            
     if 'year' in bib_dict:
         year = bib_dict['year'].value
-        year = clean_str_very_strict(year)
+        year = slugify(year)
     # pprint.pprint(year)
 
     if 'url' in bib_dict:
@@ -304,13 +304,13 @@ def get_bib_entry(entry):
     if 'abstract' in bib_dict:
         abstract = bib_dict['abstract'].value
         abstract = ' '.join(abstract.split())
-        abstract = clean_str_strict(abstract)
+        abstract = slugify(abstract)
     # pprint.pprint(abstract)
 
     if 'keywords' in bib_dict:
         keywords = sorted(list(set([k.strip() for k in bib_dict['keywords'].value.lower().split(';')])))
         keywords = [' '.join(k.split()) for k in keywords]
-        keywords = [clean_str_very_strict(k) for k in keywords] 
+        keywords = [slugify(k) for k in keywords] 
         keywords = [k for k in keywords if k.strip()]
     # pprint.pprint(keywords)
 
