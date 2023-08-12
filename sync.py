@@ -312,7 +312,8 @@ def get_bib_entry(entry):
         keywords = sorted(list(set([k.strip() for k in bib_dict['keywords'].value.lower().split(';')])))
         keywords = [' '.join(k.split()) for k in keywords]
         keywords = [slugify(k) for k in keywords] 
-        keywords = [k for k in keywords if k.strip() and len(k.strip()) < 30]
+        keywords = [k for k in keywords if k.strip()]
+        keywords = [k for k in keywords if len(k) < 30]
         keywords = sorted(list(set(keywords)))
     # pprint.pprint(keywords)
 
