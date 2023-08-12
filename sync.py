@@ -63,10 +63,10 @@ def get_payload(title='',
                                                             "text": {"content": abstract}}]}
 
     if keywords:
-        formatted_tags = [{"name": _tag} for _tag in keywords]
-        payload["properties"]["Tags"] = {"multi_select": formatted_tags}
+        formatted_keywords = [{"name": k} for k in keywords]
+        payload["properties"]["Keywords"] = {"multi_select": formatted_keywords}
     else:
-        payload["properties"]["Tags"] = {"multi_select": []}
+        payload["properties"]["Keywords"] = {"multi_select": []}
     
     if link:
         payload["properties"]["Link"] = {"url": link}
@@ -191,8 +191,8 @@ def get_notion_ref_ids():
         if _result['properties']['Abstract']['rich_text']:
             abstract = _result['properties']['Abstract']['rich_text'][0]['plain_text']
             abstract = ' '.join(abstract.split())
-        if _result['properties']['Tags']['multi_select']:
-            for _keyword in _result['properties']['Tags']['multi_select']:
+        if _result['properties']['Keywords']['multi_select']:
+            for _keyword in _result['properties']['Keywords']['multi_select']:
                 keywords.append(_keyword['name'].lower().strip())
             keywords = sorted(keywords)
 
