@@ -342,27 +342,29 @@ def main():
     bibliography = bibtexparser.parse_file(BIB_PATH)
 
     ref_ids_in_bib = []
+    formatted_bib_entries = []
     for entry in reversed(bibliography.entries):
-        # pprint.pprint(entry)
-        # pprint.pprint(dir(entry))
-        # pprint.pprint(entry.fields)
-        # pprint.pprint(entry.fields_dict)
-        # pprint.pprint(entry.key)
-        ref_ids_in_bib.append(entry.key)
-    # pprint.pprint(len(ref_ids_in_bib))
+        ref_id, formatted_entry = get_bib_entry(entry) 
+        ref_ids_in_bib.append(ref_id)
+        formatted_bib_entries.append(formatted_entry)
            
     ref_ids_in_notion, notion_entries, ref_id_notion_entry_dict = get_notion_ref_ids()
-    # pprint.pprint(len(ref_ids_in_notion))
 
     ref_ids_to_add = [ref_id for ref_id in ref_ids_in_bib if ref_id not in ref_ids_in_notion]
     ref_ids_to_delete = [ref_id for ref_id in ref_ids_in_notion if ref_id not in ref_ids_in_bib]
+    ref_ids_to_update = [e for e in formatted_bib_entries if e not in notion_entries]
 
+    pprint.pprint('NUMBER OF BIB ENTRIES: ' + str(len(ref_ids_in_bib)))
+    pprint.pprint('NUMBER OF NOTION ENTRIES: ' + str(len(notion_entries)))
     if len(ref_ids_to_add) > 0:
         pprint.pprint('NUMBER OF PAPERS TO ADD: ' + str(len(ref_ids_to_add)))
-        pprint.pprint(ref_ids_to_add)
+        # pprint.pprint(ref_ids_to_add)
     if len(ref_ids_to_delete) > 0:
         pprint.pprint('NUMBER OF PAPERS TO DELETE: ' + str(len(ref_ids_to_delete)))
-        pprint.pprint(ref_ids_to_delete)
+        # pprint.pprint(ref_ids_to_delete)
+    if len(ref_ids_to_update) > 0:
+        pprint.pprint('NUMBER OF PAPERS TO UPDATE: ' + str(len(ref_ids_to_update)))
+        # pprint.pprint(ref_ids_to_update)
 
     # Iterate over the bib entries and either add a new database row or update the row in Notion
     for entry in reversed(bibliography.entries):
