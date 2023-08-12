@@ -213,41 +213,41 @@ def get_notion_ref_ids():
     return ref_ids_in_notion, archive, ref_archive_dict
 
 
-def clean_str(string):
-    string = string.strip()
-    string = string.replace('\n', ' ')
-    string = string.replace(r'\"a', 'ä')
-    string = string.replace(r'\"e', 'ë')
-    string = string.replace(r'\"i', 'ï')
-    string = string.replace(r'\"o', 'ö')
-    string = string.replace(r'\"u', 'ü')
-    string = string.replace(r'\'a', 'á')
-    string = string.replace(r'\'e', 'é')
-    string = string.replace(r'\'i', 'í')
-    string = string.replace(r'\'o', 'ó')
-    string = string.replace(r'\'u', 'ú')
-    string = string.replace(r'\^a', 'â')
-    string = string.replace(r'\^e', 'ê')
-    string = string.replace(r'\^i', 'î')
-    string = string.replace(r'\^o', 'ô')
-    string = string.replace(r'\^u', 'û')
-    string = string.replace(r'\`a', 'à')
-    string = string.replace(r'\`e', 'è')
-    string = string.replace(r'\`i', 'ì')
-    string = string.replace(r'\`o', 'ò')
-    string = string.replace(r'\`u', 'ù')
-    string = ' '.join([w.title() if w.islower() else w for w in string.split()])
-    string = string.replace('{', '')
-    string = string.replace('}', '')
-    return string
+# def clean_str(string):
+#     string = string.strip()
+#     string = string.replace('\n', ' ')
+#     string = string.replace(r'\"a', 'ä')
+#     string = string.replace(r'\"e', 'ë')
+#     string = string.replace(r'\"i', 'ï')
+#     string = string.replace(r'\"o', 'ö')
+#     string = string.replace(r'\"u', 'ü')
+#     string = string.replace(r'\'a', 'á')
+#     string = string.replace(r'\'e', 'é')
+#     string = string.replace(r'\'i', 'í')
+#     string = string.replace(r'\'o', 'ó')
+#     string = string.replace(r'\'u', 'ú')
+#     string = string.replace(r'\^a', 'â')
+#     string = string.replace(r'\^e', 'ê')
+#     string = string.replace(r'\^i', 'î')
+#     string = string.replace(r'\^o', 'ô')
+#     string = string.replace(r'\^u', 'û')
+#     string = string.replace(r'\`a', 'à')
+#     string = string.replace(r'\`e', 'è')
+#     string = string.replace(r'\`i', 'ì')
+#     string = string.replace(r'\`o', 'ò')
+#     string = string.replace(r'\`u', 'ù')
+#     string = ' '.join([w.title() if w.islower() else w for w in string.split()])
+#     string = string.replace('{', '')
+#     string = string.replace('}', '')
+#     return string
 
 
-def clean_str_strict(s):
-    return re.sub(r'[^A-Za-z0-1\s&-.,;:\(\)"'&/?\]+', '', s) 
+# def clean_str_strict(s):
+#     return re.sub(r'[^A-Za-z0-1\s&-.,;:\(\)"'&/?\]+', '', s) 
 
 
-def clean_str_very_strict(s):
-    return re.sub(r'[^A-Za-z0-1\s&-]+', '', s) 
+# def clean_str_very_strict(s):
+#     return re.sub(r'[^A-Za-z0-1\s&-]+', '', s) 
            
 
 def format_authors(test_string):
